@@ -25,24 +25,29 @@ unsigned char FloorTile[] = {
   0x55,0x00,0xAA,0x00,0x55,0x00,0xAA,0x00
 };
 
-unsigned char BulletSpriteLeft[] = {
-  0x00,0x00,0x00,0x01,0x05,0x02,0x7E,0x7D,
-  0x7E,0x7D,0x05,0x02,0x00,0x01,0x00,0x00
-};
+// unsigned char RocketSpriteLeft[] = {
+//   0x00,0x00,0x00,0x01,0x05,0x02,0x7E,0x7D,
+//   0x7E,0x7D,0x05,0x02,0x00,0x01,0x00,0x00
+// };
 
-unsigned char BulletSpriteRight[] = {
-  0x00,0x00,0x00,0x80,0xA0,0x40,0x7E,0xBE,
-  0x7E,0xBE,0xA0,0x40,0x00,0x80,0x00,0x00,
-};
+// unsigned char RocketSpriteRight[] = {
+//   0x00,0x00,0x00,0x80,0xA0,0x40,0x7E,0xBE,
+//   0x7E,0xBE,0xA0,0x40,0x00,0x80,0x00,0x00,
+// };
 
-unsigned char BulletSpriteUp[] = {
-  0x00,0x00,0x18,0x18,0x18,0x18,0x18,0x18,
-  0x18,0x18,0x3C,0x18,0x18,0x24,0x24,0x5A
-};
+// unsigned char RocketSpriteUp[] = {
+//   0x00,0x00,0x18,0x18,0x18,0x18,0x18,0x18,
+//   0x18,0x18,0x3C,0x18,0x18,0x24,0x24,0x5A
+// };
 
-unsigned char BulletSpriteDown[] = {
-  0x24,0x5A,0x18,0x24,0x3C,0x18,0x18,0x18,
-  0x18,0x18,0x18,0x18,0x18,0x18,0x00,0x00
+// unsigned char RocketSpriteDown[] = {
+//   0x24,0x5A,0x18,0x24,0x3C,0x18,0x18,0x18,
+//   0x18,0x18,0x18,0x18,0x18,0x18,0x00,0x00
+// };
+
+unsigned char BulletSprite[] = {
+  0x00,0x00,0x00,0x00,0x18,0x18,0x24,0x3C,
+  0x24,0x3C,0x18,0x18,0x00,0x00,0x00,0x00
 };
 
 
@@ -105,14 +110,9 @@ void main (void)
     move_sprite(2, bullet3_x, bullet3_y);   // Move third bullet
     */
 
-    set_sprite_data (2, 1, BulletSpriteRight);
-    set_sprite_data (3, 1, BulletSpriteLeft);
-    set_sprite_data (4, 1, BulletSpriteUp);
-    set_sprite_data ( 5, 1, BulletSpriteDown);
-    set_sprite_tile (2, 2); // bullet1 right index 2
-    set_sprite_tile (3, 3); // bullet1 left index 3
-    set_sprite_tile (4, 4); // bullet1 up index 4
-    set_sprite_tile (5, 5); // bullet1 down index 5
+    set_sprite_data (2, 1, BulletSprite);
+    set_sprite_tile (2, 2); // bullet index 2
+
 
     move_sprite(0,player_x, player_y);  //initial position
 
@@ -163,47 +163,35 @@ void main (void)
         {
             if(shootingDirection == 0) //shooting right
             {
-                shootingDirectionBullet1 = 0;
                 bullet1_x = player_x + 8;
                 bullet1_y = player_y;
                 move_sprite (2, bullet1_x, bullet1_y);
-                move_sprite (3, 0, 0);
-                move_sprite (4, 0, 0);
-                move_sprite (5, 0, 0);
                 bullet1_Fired = 1;
+                shootingDirectionBullet1 = 0;
             }
             if(shootingDirection == 1) //shooting left
             {
-                shootingDirectionBullet1 = 1;
                 bullet1_x = player_x - 8;
                 bullet1_y = player_y;
-                move_sprite (3, bullet1_x, bullet1_y);
-                move_sprite (2, 0, 0);
-                move_sprite (4, 0, 0);
-                move_sprite (5, 0, 0);
+                move_sprite (2, bullet1_x, bullet1_y);
                 bullet1_Fired = 1;
+                shootingDirectionBullet1 = 1;
             }
             if(shootingDirection == 2) //shooting up
             {
-                shootingDirectionBullet1 = 2;
                 bullet1_x = player_x;
                 bullet1_y = player_y - 8;
-                move_sprite (4, bullet1_x, bullet1_y);
-                move_sprite (2, 0, 0);
-                move_sprite (3, 0, 0);
-                move_sprite (5, 0, 0);
+                move_sprite (2, bullet1_x, bullet1_y);
                 bullet1_Fired = 1;
+                shootingDirectionBullet1 = 2;
             }
             if(shootingDirection == 3) //shooting down
             {
-                shootingDirectionBullet1 = 3;
                 bullet1_x = player_x;
                 bullet1_y = player_y + 8;
-                move_sprite (5, bullet1_x, bullet1_y);
-                move_sprite (2, 0, 0);
-                move_sprite (3, 0, 0);
-                move_sprite (4, 0, 0);
+                move_sprite (2, bullet1_x, bullet1_y);
                 bullet1_Fired = 1;
+                shootingDirectionBullet1 = 3;
             }
         }
 
@@ -218,17 +206,17 @@ void main (void)
             if (shootingDirectionBullet1 == 1)
             {
                 bullet1_x -= 2;
-                move_sprite (3, bullet1_x, bullet1_y);
+                move_sprite (2, bullet1_x, bullet1_y);
             }
             if (shootingDirectionBullet1 == 2)
             {
                 bullet1_y -= 2;
-                move_sprite (4, bullet1_x, bullet1_y);
+                move_sprite (2, bullet1_x, bullet1_y);
             }
             if (shootingDirectionBullet1 == 3)
             {
                 bullet1_y += 2;
-                move_sprite (5, bullet1_x, bullet1_y);
+                move_sprite (2, bullet1_x, bullet1_y);
             }
             
         }
@@ -240,6 +228,7 @@ void main (void)
                 bullet1_x = 0;
                 bullet1_y = 0;
                 bullet1_Fired = 0;
+                move_sprite (2, 0, 0);
             }
         }
 
