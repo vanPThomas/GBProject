@@ -2,21 +2,27 @@
 #include <stdio.h>
 
 // === PLAYER SPRITE DATA ===
-unsigned char PlayerSprite[] =
+unsigned char PlayerSpriteLeftFacing[] =
 {
-  0x3C,0x3C,0x3C,0x66,0xFF,0xFF,0xFF,0xBD,
-  0xFF,0xBD,0xFF,0xFF,0x3C,0x66,0x3C,0x3C
+  0x00,0x00,0x1C,0x1C,0x62,0x7E,0x14,0x1C,
+  0x7C,0x7C,0x08,0x08,0x14,0x14,0x22,0x22
+};
+
+unsigned char PlayerSpriteRightFacing[] =
+{
+  0x00,0x00,0x38,0x38,0x46,0x7E,0x28,0x38,
+  0x3E,0x3E,0x10,0x10,0x28,0x28,0x44,0x44
 };
 
 // === SIMPLE WALL AND FLOOR TILES ===
 unsigned char WallTile[] = {
-  0xFF,0xFF, 0x81,0x81, 0x81,0x81, 0x81,0x81,
-  0x81,0x81, 0x81,0x81, 0x81,0x81, 0xFF,0xFF
+  0xFF,0xFF,0xFF,0xC3,0xFF,0xA5,0xE7,0x99,
+  0xE7,0x99,0xFF,0xA5,0xFF,0xC3,0xFF,0xFF
 };
 
 unsigned char FloorTile[] = {
-  0x00,0x00, 0x00,0x00, 0x00,0x00, 0x00,0x00,
-  0x00,0x00, 0x00,0x00, 0x00,0x00, 0x00,0x00
+  0x55,0x00,0xAA,0x00,0x55,0x00,0xAA,0x00,
+  0x55,0x00,0xAA,0x00,0x55,0x00,0xAA,0x00
 };
 
 //player start location
@@ -57,8 +63,10 @@ void main (void)
     SHOW_SPRITES;
     SHOW_BKG;
 
-    set_sprite_data(0,1,PlayerSprite);  // index 0, load sprite into vram, same parameter concept as in the set_bkg_data
+    set_sprite_data(0,1,PlayerSpriteLeftFacing);  // index 0, load sprite into vram, same parameter concept as in the set_bkg_data
+    set_sprite_data(1,1,PlayerSpriteRightFacing);
     set_sprite_tile(0,0);               // sprite 0 uses tile 0
+    set_sprite_tile(1,1);
     /*
     Important explanation: set_sprite_data loads the sprite into vram at a certyain index.
     set_sprite_tile puts it in the list of 40 sprites that can be used. To boil it down:
@@ -75,15 +83,23 @@ void main (void)
 
     move_sprite(0,player_x, player_y);  //initial position
 
+    uint8_t facingLeft = 1;
+
     while (1)
     {
         uint8_t joy = joypad(); // read curent dpad and button state
 
         //move left
         if (joy & J_RIGHT)
+        {
             player_x++;
+            facingLeft = 0;
+        }
         if (joy & J_LEFT)
+        {
             player_x--;
+            facingLeft = 1;
+        }
         if (joy & J_DOWN)
             player_y++;
         if (joy & J_UP)
@@ -96,7 +112,16 @@ void main (void)
         if (player_y > 144) player_y = 144;
 
         // update sprite position
-        move_sprite (0, player_x, player_y);
+        if(facingLeft == 1)
+        {
+            move_sprite (0, player_x, player_y);
+            move_sprite (1, 0, 0);
+        }
+        else
+        {
+            move_sprite (1, player_x, player_y);
+            move_sprite (0, 0, 0);
+        }
 
         wait_vbl_done(); // Wait for next frame
     }
