@@ -25,9 +25,33 @@ unsigned char FloorTile[] = {
   0x55,0x00,0xAA,0x00,0x55,0x00,0xAA,0x00
 };
 
+unsigned char BulletSpriteLeft[] = {
+  0x00,0x00,0x00,0x01,0x05,0x02,0x7E,0x7D,
+  0x7E,0x7D,0x05,0x02,0x00,0x01,0x00,0x00
+};
+
+unsigned char BulletSpriteRight[] = {
+  0x00,0x00,0x00,0x80,0xA0,0x40,0x7E,0xBE,
+  0x7E,0xBE,0xA0,0x40,0x00,0x80,0x00,0x00,
+};
+
+unsigned char BulletSpriteUp[] = {
+  0x00,0x00,0x18,0x18,0x18,0x18,0x18,0x18,
+  0x18,0x18,0x3C,0x18,0x18,0x24,0x24,0x5A
+};
+
+unsigned char BulletSpriteDown[] = {
+  0x24,0x5A,0x18,0x24,0x3C,0x18,0x18,0x18,
+  0x18,0x18,0x18,0x18,0x18,0x18,0x00,0x00
+};
+
+
 //player start location
 uint8_t player_x = 84;
 uint8_t player_y = 88;
+
+uint8_t bullet1_x = 0;
+uint8_t bullet1_y = 0;
 
 void main (void)
 {
@@ -81,29 +105,51 @@ void main (void)
     move_sprite(2, bullet3_x, bullet3_y);   // Move third bullet
     */
 
+    set_sprite_data (2, 1, BulletSpriteRight);
+    set_sprite_data (3, 1, BulletSpriteLeft);
+    set_sprite_data (4, 1, BulletSpriteUp);
+    set_sprite_data ( 5, 1, BulletSpriteDown);
+    set_sprite_tile (2, 2); // bullet1 right index 2
+    set_sprite_tile (3, 3); // bullet1 left index 3
+    set_sprite_tile (4, 4); // bullet1 up index 4
+    set_sprite_tile (5, 5); // bullet1 down index 5
+
     move_sprite(0,player_x, player_y);  //initial position
 
     uint8_t facingLeft = 1;
+    uint8_t shootingDirection = 1;
+    uint8_t shootingDirectionBullet1 = 0; // 0 = right, 1 = left, 2 = up, 3 = down
+    uint8_t bullet1_Fired = 0;
+
 
     while (1)
     {
         uint8_t joy = joypad(); // read curent dpad and button state
 
+        //========== Player Movement ==========
         //move left
         if (joy & J_RIGHT)
         {
             player_x++;
             facingLeft = 0;
+            shootingDirection = 0;
         }
         if (joy & J_LEFT)
         {
             player_x--;
             facingLeft = 1;
+            shootingDirection = 1;
+        }
+        if (joy & J_UP)
+        {
+            player_y--;
+            shootingDirection = 2;
         }
         if (joy & J_DOWN)
+        {
             player_y++;
-        if (joy & J_UP)
-            player_y--;
+            shootingDirection = 3;
+        }
 
         // clamp player to screen
         if (player_x < 16) player_x = 16;
@@ -111,7 +157,93 @@ void main (void)
         if (player_y < 24) player_y = 24;
         if (player_y > 144) player_y = 144;
 
-        // update sprite position
+        // ========== Shooting ==========
+        // detect if player shot
+        if (joy & J_A)
+        {
+            if(shootingDirection == 0) //shooting right
+            {
+                shootingDirectionBullet1 = 0;
+                bullet1_x = player_x + 8;
+                bullet1_y = player_y;
+                move_sprite (2, bullet1_x, bullet1_y);
+                move_sprite (3, 0, 0);
+                move_sprite (4, 0, 0);
+                move_sprite (5, 0, 0);
+                bullet1_Fired = 1;
+            }
+            if(shootingDirection == 1) //shooting left
+            {
+                shootingDirectionBullet1 = 1;
+                bullet1_x = player_x - 8;
+                bullet1_y = player_y;
+                move_sprite (3, bullet1_x, bullet1_y);
+                move_sprite (2, 0, 0);
+                move_sprite (4, 0, 0);
+                move_sprite (5, 0, 0);
+                bullet1_Fired = 1;
+            }
+            if(shootingDirection == 2) //shooting up
+            {
+                shootingDirectionBullet1 = 2;
+                bullet1_x = player_x;
+                bullet1_y = player_y - 8;
+                move_sprite (4, bullet1_x, bullet1_y);
+                move_sprite (2, 0, 0);
+                move_sprite (3, 0, 0);
+                move_sprite (5, 0, 0);
+                bullet1_Fired = 1;
+            }
+            if(shootingDirection == 3) //shooting down
+            {
+                shootingDirectionBullet1 = 3;
+                bullet1_x = player_x;
+                bullet1_y = player_y + 8;
+                move_sprite (5, bullet1_x, bullet1_y);
+                move_sprite (2, 0, 0);
+                move_sprite (3, 0, 0);
+                move_sprite (4, 0, 0);
+                bullet1_Fired = 1;
+            }
+        }
+
+        // update bullet 1 location and print
+        if (bullet1_Fired)
+        {
+            if (shootingDirectionBullet1 == 0)
+            {
+                bullet1_x += 2;
+                move_sprite (2, bullet1_x, bullet1_y);
+            }
+            if (shootingDirectionBullet1 == 1)
+            {
+                bullet1_x -= 2;
+                move_sprite (3, bullet1_x, bullet1_y);
+            }
+            if (shootingDirectionBullet1 == 2)
+            {
+                bullet1_y -= 2;
+                move_sprite (4, bullet1_x, bullet1_y);
+            }
+            if (shootingDirectionBullet1 == 3)
+            {
+                bullet1_y += 2;
+                move_sprite (5, bullet1_x, bullet1_y);
+            }
+            
+        }
+
+        if (bullet1_Fired)
+        {
+            if (bullet1_x < 16 || bullet1_x > 152 || bullet1_y < 24 || bullet1_y > 144)
+            {
+                bullet1_x = 0;
+                bullet1_y = 0;
+                bullet1_Fired = 0;
+            }
+        }
+
+        // update player sprite position
         if(facingLeft == 1)
         {
             move_sprite (0, player_x, player_y);
