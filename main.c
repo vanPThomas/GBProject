@@ -117,38 +117,48 @@ void main (void)
     move_sprite(0,player_x, player_y);  //initial position
 
     uint8_t facingLeft = 1;
-    uint8_t shootingDirection = 1;
-    uint8_t shootingDirectionBullet1 = 0; // 0 = right, 1 = left, 2 = up, 3 = down
     uint8_t bullet1_Fired = 0;
-
+    uint8_t verticalShootingDirection = 2; // 0 = up, 1 = down, 2 = neither
+    uint8_t horizontalShootingDirection = 2; // 0 = right, 1 = left, 2 = neither
+    uint8_t verticalShootingDirectionBullet1 = 2;
+    uint8_t horizontalShootingDirectionBullet1 = 2;
 
     while (1)
     {
         uint8_t joy = joypad(); // read curent dpad and button state
 
         //========== Player Movement ==========
+
+        if ((joy & J_RIGHT) || (joy & J_LEFT) || (joy & J_UP) || (joy & J_DOWN))
+        {
+            verticalShootingDirection = 2;
+            horizontalShootingDirection = 2;
+            // verticalShootingDirectionBullet1 = 2;
+            // horizontalShootingDirectionBullet1 = 2;
+        }
+
         //move left
         if (joy & J_RIGHT)
         {
             player_x++;
             facingLeft = 0;
-            shootingDirection = 0;
+            horizontalShootingDirection = 0;
         }
         if (joy & J_LEFT)
         {
             player_x--;
             facingLeft = 1;
-            shootingDirection = 1;
+            horizontalShootingDirection = 1;
         }
         if (joy & J_UP)
         {
             player_y--;
-            shootingDirection = 2;
+            verticalShootingDirection = 0;
         }
         if (joy & J_DOWN)
         {
             player_y++;
-            shootingDirection = 3;
+            verticalShootingDirection = 1;
         }
 
         // clamp player to screen
@@ -159,65 +169,63 @@ void main (void)
 
         // ========== Shooting ==========
         // detect if player shot
-        if (joy & J_A)
+        if ((joy & J_A) && bullet1_Fired == 0)
         {
-            if(shootingDirection == 0) //shooting right
+            bullet1_Fired = 1;
+
+            horizontalShootingDirectionBullet1 = 2;
+            verticalShootingDirectionBullet1 = 2;
+
+            if( horizontalShootingDirection == 0 || horizontalShootingDirection == 1 || verticalShootingDirection == 0 || verticalShootingDirection == 1)
             {
-                bullet1_x = player_x + 8;
                 bullet1_y = player_y;
-                move_sprite (2, bullet1_x, bullet1_y);
-                bullet1_Fired = 1;
-                shootingDirectionBullet1 = 0;
-            }
-            if(shootingDirection == 1) //shooting left
-            {
-                bullet1_x = player_x - 8;
-                bullet1_y = player_y;
-                move_sprite (2, bullet1_x, bullet1_y);
-                bullet1_Fired = 1;
-                shootingDirectionBullet1 = 1;
-            }
-            if(shootingDirection == 2) //shooting up
-            {
                 bullet1_x = player_x;
-                bullet1_y = player_y - 8;
-                move_sprite (2, bullet1_x, bullet1_y);
-                bullet1_Fired = 1;
-                shootingDirectionBullet1 = 2;
             }
-            if(shootingDirection == 3) //shooting down
+
+            
+            if(horizontalShootingDirection == 0) //shooting right
             {
-                bullet1_x = player_x;
-                bullet1_y = player_y + 8;
-                move_sprite (2, bullet1_x, bullet1_y);
-                bullet1_Fired = 1;
-                shootingDirectionBullet1 = 3;
+                bullet1_x = player_x + 5;
+                horizontalShootingDirectionBullet1 = 0;
             }
+            if(horizontalShootingDirection == 1) //shooting left
+            {
+                bullet1_x = player_x - 5;
+                horizontalShootingDirectionBullet1 = 1;
+            }
+            if(verticalShootingDirection == 0) //shooting up
+            {
+                bullet1_y = player_y - 5;
+                verticalShootingDirectionBullet1 = 0;
+            }
+            if(verticalShootingDirection == 1) //shooting down
+            {
+                bullet1_y = player_y + 5;
+                verticalShootingDirectionBullet1 = 1;
+            }
+            move_sprite (2, bullet1_x, bullet1_y);
         }
 
         // update bullet 1 location and print
         if (bullet1_Fired)
         {
-            if (shootingDirectionBullet1 == 0)
+            if (horizontalShootingDirectionBullet1 == 0)
             {
                 bullet1_x += 2;
-                move_sprite (2, bullet1_x, bullet1_y);
             }
-            if (shootingDirectionBullet1 == 1)
+            if (horizontalShootingDirectionBullet1 == 1)
             {
                 bullet1_x -= 2;
-                move_sprite (2, bullet1_x, bullet1_y);
             }
-            if (shootingDirectionBullet1 == 2)
+            if (verticalShootingDirectionBullet1 == 0)
             {
                 bullet1_y -= 2;
-                move_sprite (2, bullet1_x, bullet1_y);
             }
-            if (shootingDirectionBullet1 == 3)
+            if (verticalShootingDirectionBullet1 == 1)
             {
                 bullet1_y += 2;
-                move_sprite (2, bullet1_x, bullet1_y);
             }
+            move_sprite (2, bullet1_x, bullet1_y);
             
         }
 
@@ -228,6 +236,8 @@ void main (void)
                 bullet1_x = 0;
                 bullet1_y = 0;
                 bullet1_Fired = 0;
+                horizontalShootingDirectionBullet1 = 2;
+                verticalShootingDirectionBullet1 = 2;
                 move_sprite (2, 0, 0);
             }
         }
