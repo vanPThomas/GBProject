@@ -123,6 +123,7 @@ void main (void)
     uint8_t verticalShootingDirectionBullet1 = 2;
     uint8_t horizontalShootingDirectionBullet1 = 2;
 
+    // Main Loop
     while (1)
     {
         uint8_t joy = joypad(); // read curent dpad and button state
@@ -182,7 +183,7 @@ void main (void)
                 bullet1_x = player_x;
             }
 
-            
+            // Set bullet starting location and direction
             if(horizontalShootingDirection == 0) //shooting right
             {
                 bullet1_x = player_x + 5;
@@ -229,6 +230,7 @@ void main (void)
             
         }
 
+        // Detect if bullet goes off screen and delete it
         if (bullet1_Fired)
         {
             if (bullet1_x < 16 || bullet1_x > 152 || bullet1_y < 24 || bullet1_y > 144)
