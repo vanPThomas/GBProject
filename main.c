@@ -50,6 +50,14 @@ unsigned char BulletSprite[] = {
   0x24,0x3C,0x18,0x18,0x00,0x00,0x00,0x00
 };
 
+typedef struct {
+    uint8_t x;
+    uint8_t y;
+    uint8_t dir_horizontal;   // 0=right, 1=left, 2=none
+    uint8_t dir_vertical;     // 0=up, 1=down, 2=none
+    uint8_t active;
+} Bullet;
+
 
 //player start location
 uint8_t player_x = 84;
@@ -122,6 +130,8 @@ void main (void)
     uint8_t horizontalShootingDirection = 2; // 0 = right, 1 = left, 2 = neither
     uint8_t verticalShootingDirectionBullet1 = 2;
     uint8_t horizontalShootingDirectionBullet1 = 2;
+
+    Bullet bullet = {0, 0, 2, 2, 0};
 
     // Main Loop
     while (1)
