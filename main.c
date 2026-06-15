@@ -63,9 +63,6 @@ typedef struct {
 uint8_t player_x = 84;
 uint8_t player_y = 88;
 
-uint8_t bullet1_x = 0;
-uint8_t bullet1_y = 0;
-
 void main (void)
 {
     // Set up background data
@@ -125,11 +122,8 @@ void main (void)
     move_sprite(0,player_x, player_y);  //initial position
 
     uint8_t facingLeft = 1;
-    uint8_t bullet1_Fired = 0;
     uint8_t verticalShootingDirection = 2; // 0 = up, 1 = down, 2 = neither
     uint8_t horizontalShootingDirection = 2; // 0 = right, 1 = left, 2 = neither
-    uint8_t verticalShootingDirectionBullet1 = 2;
-    uint8_t horizontalShootingDirectionBullet1 = 2;
 
     Bullet bullet = {0, 0, 2, 2, 0};
 
@@ -144,8 +138,6 @@ void main (void)
         {
             verticalShootingDirection = 2;
             horizontalShootingDirection = 2;
-            // verticalShootingDirectionBullet1 = 2;
-            // horizontalShootingDirectionBullet1 = 2;
         }
 
         //move left
@@ -180,76 +172,76 @@ void main (void)
 
         // ========== Shooting ==========
         // detect if player shot
-        if ((joy & J_A) && bullet1_Fired == 0)
+        if ((joy & J_A) && bullet.active == 0)
         {
-            bullet1_Fired = 1;
+            bullet.active = 1;
 
-            horizontalShootingDirectionBullet1 = 2;
-            verticalShootingDirectionBullet1 = 2;
+            bullet.dir_horizontal = 2;
+            bullet.dir_vertical = 2;
 
             if( horizontalShootingDirection == 0 || horizontalShootingDirection == 1 || verticalShootingDirection == 0 || verticalShootingDirection == 1)
             {
-                bullet1_y = player_y;
-                bullet1_x = player_x;
+                bullet.x = player_x;
+                bullet.y = player_x;
             }
 
             // Set bullet starting location and direction
             if(horizontalShootingDirection == 0) //shooting right
             {
-                bullet1_x = player_x + 5;
-                horizontalShootingDirectionBullet1 = 0;
+                bullet.x = player_x + 5;
+                bullet.dir_horizontal = 0;
             }
             if(horizontalShootingDirection == 1) //shooting left
             {
-                bullet1_x = player_x - 5;
-                horizontalShootingDirectionBullet1 = 1;
+                bullet.x = player_x - 5;
+                bullet.dir_horizontal = 1;
             }
             if(verticalShootingDirection == 0) //shooting up
             {
-                bullet1_y = player_y - 5;
-                verticalShootingDirectionBullet1 = 0;
+                bullet.y = player_y - 5;
+                bullet.dir_vertical = 0;
             }
             if(verticalShootingDirection == 1) //shooting down
             {
-                bullet1_y = player_y + 5;
-                verticalShootingDirectionBullet1 = 1;
+                bullet.y = player_y + 5;
+                bullet.dir_vertical = 1;
             }
-            move_sprite (2, bullet1_x, bullet1_y);
+            move_sprite (2, bullet.x, bullet.y);
         }
 
         // update bullet 1 location and print
-        if (bullet1_Fired)
+        if (bullet.active)
         {
-            if (horizontalShootingDirectionBullet1 == 0)
+            if (bullet.dir_horizontal == 0)
             {
-                bullet1_x += 2;
+                bullet.x += 2;
             }
-            if (horizontalShootingDirectionBullet1 == 1)
+            if (bullet.dir_horizontal == 1)
             {
-                bullet1_x -= 2;
+                bullet.x -= 2;
             }
-            if (verticalShootingDirectionBullet1 == 0)
+            if (bullet.dir_vertical == 0)
             {
-                bullet1_y -= 2;
+                bullet.y -= 2;
             }
-            if (verticalShootingDirectionBullet1 == 1)
+            if (bullet.dir_vertical == 1)
             {
-                bullet1_y += 2;
+                bullet.y += 2;
             }
-            move_sprite (2, bullet1_x, bullet1_y);
+            move_sprite (2, bullet.x, bullet.y);
             
         }
 
         // Detect if bullet goes off screen and delete it
-        if (bullet1_Fired)
+        if (bullet.active)
         {
-            if (bullet1_x < 16 || bullet1_x > 152 || bullet1_y < 24 || bullet1_y > 144)
+            if (bullet.x < 16 || bullet.x > 152 || bullet.y < 24 || bullet.y > 144)
             {
-                bullet1_x = 0;
-                bullet1_y = 0;
-                bullet1_Fired = 0;
-                horizontalShootingDirectionBullet1 = 2;
-                verticalShootingDirectionBullet1 = 2;
+                bullet.x = 0;
+                bullet.y = 0;
+                bullet.active = 0;
+                bullet.dir_horizontal = 2;
+                bullet.dir_vertical = 2;
                 move_sprite (2, 0, 0);
             }
         }
