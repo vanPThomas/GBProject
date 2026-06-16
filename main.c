@@ -182,7 +182,7 @@ void main (void)
             if( horizontalShootingDirection == 0 || horizontalShootingDirection == 1 || verticalShootingDirection == 0 || verticalShootingDirection == 1)
             {
                 bullet.x = player_x;
-                bullet.y = player_x;
+                bullet.y = player_y;
             }
 
             // Set bullet starting location and direction
