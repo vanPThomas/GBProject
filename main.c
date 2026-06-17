@@ -58,6 +58,16 @@ typedef struct {
     uint8_t active;
 } Bullet;
 
+typedef struct {
+    uint8_t x;
+    uint8_t y;
+    uint8_t facingLeft;
+    uint8_t score;
+    uint8_t bulletsFired;
+    uint8_t verticalShootingDirection;
+    uint8_t horizontalShootingDirection;
+} Player;
+
 
 //player start location
 uint8_t player_x = 84;
@@ -126,6 +136,8 @@ void main (void)
     uint8_t horizontalShootingDirection = 2; // 0 = right, 1 = left, 2 = neither
 
     Bullet bullet = {0, 0, 2, 2, 0};
+    Player player = {84, 84, 1, 0, 0, 2, 2};
+
 
     // Main Loop
     while (1)
