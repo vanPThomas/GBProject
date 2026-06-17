@@ -70,8 +70,8 @@ typedef struct {
 
 
 //player start location
-uint8_t player_x = 84;
-uint8_t player_y = 88;
+// uint8_t player_x = 84;
+// uint8_t player_y = 88;
 
 void main (void)
 {
@@ -129,15 +129,15 @@ void main (void)
     set_sprite_tile (2, 2); // bullet index 2
 
 
-    move_sprite(0,player_x, player_y);  //initial position
-
-    uint8_t facingLeft = 1;
-    uint8_t verticalShootingDirection = 2; // 0 = up, 1 = down, 2 = neither
-    uint8_t horizontalShootingDirection = 2; // 0 = right, 1 = left, 2 = neither
-
+    
+    // uint8_t facingLeft = 1;
+    // uint8_t verticalShootingDirection = 2; // 0 = up, 1 = down, 2 = neither
+    // uint8_t horizontalShootingDirection = 2; // 0 = right, 1 = left, 2 = neither
+    
     Bullet bullet = {0, 0, 2, 2, 0};
     Player player = {84, 84, 1, 0, 0, 2, 2};
-
+    
+    move_sprite(0,player.x, player.y);  //initial position
 
     // Main Loop
     while (1)
@@ -148,39 +148,39 @@ void main (void)
 
         if ((joy & J_RIGHT) || (joy & J_LEFT) || (joy & J_UP) || (joy & J_DOWN))
         {
-            verticalShootingDirection = 2;
-            horizontalShootingDirection = 2;
+            player.verticalShootingDirection = 2;
+            player.horizontalShootingDirection = 2;
         }
 
         //move left
         if (joy & J_RIGHT)
         {
-            player_x++;
-            facingLeft = 0;
-            horizontalShootingDirection = 0;
+            player.x++;
+            player.facingLeft = 0;
+            player.horizontalShootingDirection = 0;
         }
         if (joy & J_LEFT)
         {
-            player_x--;
-            facingLeft = 1;
-            horizontalShootingDirection = 1;
+            player.x--;
+            player.facingLeft = 1;
+            player.horizontalShootingDirection = 1;
         }
         if (joy & J_UP)
         {
-            player_y--;
-            verticalShootingDirection = 0;
+            player.y--;
+            player.verticalShootingDirection = 0;
         }
         if (joy & J_DOWN)
         {
-            player_y++;
-            verticalShootingDirection = 1;
+            player.y++;
+            player.verticalShootingDirection = 1;
         }
 
         // clamp player to screen
-        if (player_x < 16) player_x = 16;
-        if (player_x > 152) player_x = 152;
-        if (player_y < 24) player_y = 24;
-        if (player_y > 144) player_y = 144;
+        if (player.x < 16) player.x = 16;
+        if (player.x > 152) player.x = 152;
+        if (player.y < 24) player.y = 24;
+        if (player.y > 144) player.y = 144;
 
         // ========== Shooting ==========
         // detect if player shot
@@ -191,31 +191,31 @@ void main (void)
             bullet.dir_horizontal = 2;
             bullet.dir_vertical = 2;
 
-            if( horizontalShootingDirection == 0 || horizontalShootingDirection == 1 || verticalShootingDirection == 0 || verticalShootingDirection == 1)
+            if( player.horizontalShootingDirection == 0 || player.horizontalShootingDirection == 1 || player.verticalShootingDirection == 0 || player.verticalShootingDirection == 1)
             {
-                bullet.x = player_x;
-                bullet.y = player_y;
+                bullet.x = player.x;
+                bullet.y = player.y;
             }
 
             // Set bullet starting location and direction
-            if(horizontalShootingDirection == 0) //shooting right
+            if(player.horizontalShootingDirection == 0) //shooting right
             {
-                bullet.x = player_x + 5;
+                bullet.x = player.x + 5;
                 bullet.dir_horizontal = 0;
             }
-            if(horizontalShootingDirection == 1) //shooting left
+            if(player.horizontalShootingDirection == 1) //shooting left
             {
-                bullet.x = player_x - 5;
+                bullet.x = player.x - 5;
                 bullet.dir_horizontal = 1;
             }
-            if(verticalShootingDirection == 0) //shooting up
+            if(player.verticalShootingDirection == 0) //shooting up
             {
-                bullet.y = player_y - 5;
+                bullet.y = player.y - 5;
                 bullet.dir_vertical = 0;
             }
-            if(verticalShootingDirection == 1) //shooting down
+            if(player.verticalShootingDirection == 1) //shooting down
             {
-                bullet.y = player_y + 5;
+                bullet.y = player.y + 5;
                 bullet.dir_vertical = 1;
             }
             move_sprite (2, bullet.x, bullet.y);
@@ -259,14 +259,14 @@ void main (void)
         }
 
         // update player sprite position
-        if(facingLeft == 1)
+        if(player.facingLeft == 1)
         {
-            move_sprite (0, player_x, player_y);
+            move_sprite (0, player.x, player.y);
             move_sprite (1, 0, 0);
         }
         else
         {
-            move_sprite (1, player_x, player_y);
+            move_sprite (1, player.x, player.y);
             move_sprite (0, 0, 0);
         }
 
