@@ -63,6 +63,7 @@ typedef struct {
     uint8_t y;
     uint8_t facingLeft;
     uint8_t score;
+    uint8_t lives;
     uint8_t bulletsFired;
     uint8_t verticalShootingDirection;
     uint8_t horizontalShootingDirection;
@@ -92,11 +93,11 @@ void main (void)
 
     for (uint8_t x = 0; x < 20; x++)
     {
-        set_bkg_tile_xy(x, 0, 1); // Top wall
+        set_bkg_tile_xy(x, 1, 1); // Top wall
         set_bkg_tile_xy(x, 17, 1); // Bottom Wall
         // very simple varriable: (x-coordinate on grid, y-coord, bkg tile index)
     }
-    for (uint8_t y = 0; y < 18; y++)
+    for (uint8_t y = 1; y < 18; y++)
     {
         set_bkg_tile_xy(0, y, 1); // Left Wall
         set_bkg_tile_xy(19, y, 1); // Right wall
@@ -135,7 +136,7 @@ void main (void)
     // uint8_t horizontalShootingDirection = 2; // 0 = right, 1 = left, 2 = neither
     
     Bullet bullet = {0, 0, 2, 2, 0};
-    Player player = {84, 84, 1, 0, 0, 2, 2};
+    Player player = {84, 84, 1, 0, 3, 0, 2, 2};
     
     move_sprite(0,player.x, player.y);  //initial position
 
