@@ -69,11 +69,6 @@ typedef struct {
     uint8_t horizontalShootingDirection;
 } Player;
 
-
-//player start location
-// uint8_t player_x = 84;
-// uint8_t player_y = 88;
-
 void main (void)
 {
     // Set up background data
@@ -128,12 +123,6 @@ void main (void)
 
     set_sprite_data (2, 1, BulletSprite);
     set_sprite_tile (2, 2); // bullet index 2
-
-
-    
-    // uint8_t facingLeft = 1;
-    // uint8_t verticalShootingDirection = 2; // 0 = up, 1 = down, 2 = neither
-    // uint8_t horizontalShootingDirection = 2; // 0 = right, 1 = left, 2 = neither
     
     Bullet bullet = {0, 0, 2, 2, 0};
     Player player = {84, 84, 1, 0, 3, 0, 2, 2};
