@@ -138,7 +138,6 @@ void main (void)
     uint8_t bulletFrameCounter = 0;
     const uint8_t firingRateFrames = 20;
 
-
     // Main Loop
     while (1)
     {
@@ -148,7 +147,6 @@ void main (void)
         uint8_t joy = joypad(); // read curent dpad and button state
 
         //========== Player Movement ==========
-
         if ((joy & J_RIGHT) || (joy & J_LEFT) || (joy & J_UP) || (joy & J_DOWN))
         {
             player.verticalShootingDirection = 2;
@@ -261,7 +259,7 @@ void main (void)
             // Detect if bullet goes off screen and delete it
             if (bullets[i].active)
             {
-                if (bullets[i].x < 16 || bullets[i].x > 152 || bullets[i].y < 24 || bullets[i].y > 144)
+                if (bullets[i].x < 16 || bullets[i].x > 152 || bullets[i].y < 32 || bullets[i].y > 144)
                 {
                     bullets[i].x = 0;
                     bullets[i].y = 0;
