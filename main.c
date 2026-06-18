@@ -180,7 +180,7 @@ void main (void)
         // clamp player to screen
         if (player.x < 16) player.x = 16;
         if (player.x > 152) player.x = 152;
-        if (player.y < 24) player.y = 24;
+        if (player.y < 32) player.y = 32;
         if (player.y > 144) player.y = 144;
 
         // ========== Shooting ==========
