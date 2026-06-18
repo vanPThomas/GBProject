@@ -56,6 +56,7 @@ typedef struct {
     uint8_t dir_horizontal;   // 0=right, 1=left, 2=none
     uint8_t dir_vertical;     // 0=up, 1=down, 2=none
     uint8_t active;
+    uint8_t spriteIndex;
 } Bullet;
 
 typedef struct {
@@ -123,15 +124,27 @@ void main (void)
 
     set_sprite_data (2, 1, BulletSprite);
     set_sprite_tile (2, 2); // bullet index 2
+    set_sprite_tile (3, 2); // bullet index 3
+    set_sprite_tile (4, 2); // bullet index 4
     
-    Bullet bullet = {0, 0, 2, 2, 0};
+    Bullet bullet1 = {0, 0, 2, 2, 0, 2};
+    Bullet bullet2 = {0, 0, 2, 2, 0, 3};
+    Bullet bullet3 = {0, 0, 2, 2, 0, 4};
     Player player = {84, 84, 1, 0, 3, 0, 2, 2};
     
     move_sprite(0,player.x, player.y);  //initial position
 
+    Bullet bullets[3] = {bullet1, bullet2, bullet3};   // Creates 3 bullets
+    uint8_t bulletFrameCounter = 0;
+    const uint8_t firingRateFrames = 20;
+
+
     // Main Loop
     while (1)
     {
+        if (bulletFrameCounter > 0) bulletFrameCounter++;
+        if (bulletFrameCounter >= firingRateFrames) bulletFrameCounter = 0;
+
         uint8_t joy = joypad(); // read curent dpad and button state
 
         //========== Player Movement ==========
@@ -174,77 +187,89 @@ void main (void)
 
         // ========== Shooting ==========
         // detect if player shot
-        if ((joy & J_A) && bullet.active == 0)
+        if ((joy & J_A) && bulletFrameCounter == 0)
         {
-            bullet.active = 1;
-
-            bullet.dir_horizontal = 2;
-            bullet.dir_vertical = 2;
-
-            if( player.horizontalShootingDirection == 0 || player.horizontalShootingDirection == 1 || player.verticalShootingDirection == 0 || player.verticalShootingDirection == 1)
+            bulletFrameCounter++;
+            // Find first inactive bullet
+            for (uint8_t i = 0; i < 3; i++)
             {
-                bullet.x = player.x;
-                bullet.y = player.y;
+                if(bullets[i].active == 0)
+                {
+                    bullets[i].active = 1;
+        
+                    bullets[i].dir_horizontal = 2;
+                    bullets[i].dir_vertical = 2;
+        
+                    if( player.horizontalShootingDirection == 0 || player.horizontalShootingDirection == 1 || player.verticalShootingDirection == 0 || player.verticalShootingDirection == 1)
+                    {
+                        bullets[i].x = player.x;
+                        bullets[i].y = player.y;
+                    }
+        
+                    // Set bullet starting location and direction
+                    if(player.horizontalShootingDirection == 0) //shooting right
+                    {
+                        bullets[i].x = player.x + 5;
+                        bullets[i].dir_horizontal = 0;
+                    }
+                    if(player.horizontalShootingDirection == 1) //shooting left
+                    {
+                        bullets[i].x = player.x - 5;
+                        bullets[i].dir_horizontal = 1;
+                    }
+                    if(player.verticalShootingDirection == 0) //shooting up
+                    {
+                        bullets[i].y = player.y - 5;
+                        bullets[i].dir_vertical = 0;
+                    }
+                    if(player.verticalShootingDirection == 1) //shooting down
+                    {
+                        bullets[i].y = player.y + 5;
+                        bullets[i].dir_vertical = 1;
+                    }
+                    move_sprite (bullets[i].spriteIndex, bullets[i].x, bullets[i].y);
+                    break;
+                }
             }
-
-            // Set bullet starting location and direction
-            if(player.horizontalShootingDirection == 0) //shooting right
-            {
-                bullet.x = player.x + 5;
-                bullet.dir_horizontal = 0;
-            }
-            if(player.horizontalShootingDirection == 1) //shooting left
-            {
-                bullet.x = player.x - 5;
-                bullet.dir_horizontal = 1;
-            }
-            if(player.verticalShootingDirection == 0) //shooting up
-            {
-                bullet.y = player.y - 5;
-                bullet.dir_vertical = 0;
-            }
-            if(player.verticalShootingDirection == 1) //shooting down
-            {
-                bullet.y = player.y + 5;
-                bullet.dir_vertical = 1;
-            }
-            move_sprite (2, bullet.x, bullet.y);
         }
 
-        // update bullet 1 location and print
-        if (bullet.active)
+        // update all bullets location and print
+        for (uint8_t i = 0; i < 3; i++)
         {
-            if (bullet.dir_horizontal == 0)
+            if (bullets[i].active)
             {
-                bullet.x += 2;
+                if (bullets[i].dir_horizontal == 0)
+                {
+                    bullets[i].x += 2;
+                }
+                if (bullets[i].dir_horizontal == 1)
+                {
+                    bullets[i].x -= 2;
+                }
+                if (bullets[i].dir_vertical == 0)
+                {
+                    bullets[i].y -= 2;
+                }
+                if (bullets[i].dir_vertical == 1)
+                {
+                    bullets[i].y += 2;
+                }
+                move_sprite (bullets[i].spriteIndex, bullets[i].x, bullets[i].y);
+                
             }
-            if (bullet.dir_horizontal == 1)
+    
+            // Detect if bullet goes off screen and delete it
+            if (bullets[i].active)
             {
-                bullet.x -= 2;
-            }
-            if (bullet.dir_vertical == 0)
-            {
-                bullet.y -= 2;
-            }
-            if (bullet.dir_vertical == 1)
-            {
-                bullet.y += 2;
-            }
-            move_sprite (2, bullet.x, bullet.y);
-            
-        }
-
-        // Detect if bullet goes off screen and delete it
-        if (bullet.active)
-        {
-            if (bullet.x < 16 || bullet.x > 152 || bullet.y < 24 || bullet.y > 144)
-            {
-                bullet.x = 0;
-                bullet.y = 0;
-                bullet.active = 0;
-                bullet.dir_horizontal = 2;
-                bullet.dir_vertical = 2;
-                move_sprite (2, 0, 0);
+                if (bullets[i].x < 16 || bullets[i].x > 152 || bullets[i].y < 24 || bullets[i].y > 144)
+                {
+                    bullets[i].x = 0;
+                    bullets[i].y = 0;
+                    bullets[i].active = 0;
+                    bullets[i].dir_horizontal = 2;
+                    bullets[i].dir_vertical = 2;
+                    move_sprite (bullets[i].spriteIndex, 0, 0);
+                }
             }
         }
 
