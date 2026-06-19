@@ -1,5 +1,7 @@
 #include <gb/gb.h>
 #include <stdio.h>
+#include <gbdk/console.h>
+#include <gbdk/font.h>
 
 // === PLAYER SPRITE DATA ===
 unsigned char PlayerSpriteLeftFacing[] =
@@ -141,6 +143,12 @@ void main (void)
     // Main Loop
     while (1)
     {
+        gotoxy(1, 0);           // position on background map (x=1, y=0)
+        printf("SCORE:%d", player.score);
+
+        gotoxy(12, 0);
+        printf("LIVES:%d", player.lives);
+
         if (bulletFrameCounter > 0) bulletFrameCounter++;
         if (bulletFrameCounter >= firingRateFrames) bulletFrameCounter = 0;
 
