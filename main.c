@@ -36,6 +36,12 @@ void main (void)
     //   1  = Load 1 tile
     //   WallTile = The wall graphic data
     // Second number is to reduce the lines of code but less readable. 1 is fine.
+    set_bkg_data(2, 1, S_char);
+    set_bkg_data(3, 1, C_char);
+    set_bkg_data(4, 1, O_char);
+    set_bkg_data(5, 1, R_char);
+    set_bkg_data(6, 1, E_char);
+    set_bkg_data(7, 1, colon_char);
 
     // Fill Screen with floor tiles
     fill_bkg_rect(0, 0, 20, 18, 0);
@@ -51,6 +57,12 @@ void main (void)
         set_bkg_tile_xy(0, y, 1); // Left Wall
         set_bkg_tile_xy(19, y, 1); // Right wall
     }
+    set_bkg_tile_xy(0, 0, 2);
+    set_bkg_tile_xy(1, 0, 3);
+    set_bkg_tile_xy(2, 0, 4);
+    set_bkg_tile_xy(3, 0, 5);
+    set_bkg_tile_xy(4, 0, 6);
+    set_bkg_tile_xy(5, 0, 7);
 
     // set up graphics
     DISPLAY_ON;
