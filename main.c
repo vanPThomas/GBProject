@@ -43,6 +43,10 @@ void main (void)
     set_bkg_data(6, 1, E_char);
     set_bkg_data(7, 1, colon_char);
 
+    set_bkg_data (8, 1, L_char);
+    set_bkg_data (9, 1, I_char);
+    set_bkg_data (10, 1, V_char);
+
     // Fill Screen with floor tiles
     fill_bkg_rect(0, 0, 20, 18, 0);
 
@@ -57,12 +61,19 @@ void main (void)
         set_bkg_tile_xy(0, y, 1); // Left Wall
         set_bkg_tile_xy(19, y, 1); // Right wall
     }
-    set_bkg_tile_xy(0, 0, 2);
-    set_bkg_tile_xy(1, 0, 3);
-    set_bkg_tile_xy(2, 0, 4);
-    set_bkg_tile_xy(3, 0, 5);
-    set_bkg_tile_xy(4, 0, 6);
-    set_bkg_tile_xy(5, 0, 7);
+    set_bkg_tile_xy(0, 0, 2); // S
+    set_bkg_tile_xy(1, 0, 3); // C
+    set_bkg_tile_xy(2, 0, 4); // O
+    set_bkg_tile_xy(3, 0, 5); // R
+    set_bkg_tile_xy(4, 0, 6); // E
+    set_bkg_tile_xy(5, 0, 7); // :
+
+    set_bkg_tile_xy(11, 0, 8); // L
+    set_bkg_tile_xy(12, 0, 9); // I
+    set_bkg_tile_xy(13, 0, 10); // V
+    set_bkg_tile_xy(14, 0, 6); // E
+    set_bkg_tile_xy(15, 0, 2); // S
+    set_bkg_tile_xy(16, 0, 7); // :
 
     // set up graphics
     DISPLAY_ON;

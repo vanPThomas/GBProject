@@ -14,4 +14,8 @@ extern unsigned char R_char[];
 extern unsigned char E_char[];
 extern unsigned char colon_char[];
 
+extern unsigned char L_char[];
+extern unsigned char I_char[];
+extern unsigned char V_char[];
+
 #endif
