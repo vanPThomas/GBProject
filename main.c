@@ -23,6 +23,8 @@ typedef struct {
     uint8_t horizontalShootingDirection;
 } Player;
 
+int rle_decompress(const uint8_t* in, size_t in_len, uint8_t* out, size_t out_max);
+
 void main (void)
 {
     // Set up background data
@@ -261,6 +263,34 @@ void main (void)
 
         wait_vbl_done(); // Wait for next frame
     }
+}
+
+
+int rle_decompress(const uint8_t* in, size_t in_len, uint8_t* out, size_t out_max)
+{
+    size_t out_idx = 0;
+    size_t i = 0;
+
+    while (i < in_len) {
+        uint8_t count = in[i++];
+
+        if (count & 0x80) {
+            // Run
+            uint8_t val = in[i++];
+            uint8_t real_count = count & 0x7F;
+            if (out_idx + real_count > out_max) return -1;
+            for (uint8_t j = 0; j < real_count; j++) {
+                out[out_idx++] = val;
+            }
+        } else {
+            // Literal block
+            if (i + count > in_len || out_idx + count > out_max) return -1;
+            for (uint8_t j = 0; j < count; j++) {
+                out[out_idx++] = in[i++];
+            }
+        }
+    }
+    return (int)out_idx;
 }
 
 // export PATH=$PATH:/opt/gbdk/bin
