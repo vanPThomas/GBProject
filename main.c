@@ -23,7 +23,7 @@ typedef struct {
     uint8_t horizontalShootingDirection;
 } Player;
 
-int rle_decompress(const uint8_t* in, size_t in_len, uint8_t* out, size_t out_max);
+void draw_number(uint8_t x, uint8_t y, uint16_t number);
 
 void main (void)
 {
@@ -33,6 +33,9 @@ void main (void)
     //   0  = Start loading at background tile index #0 in VRAM
     //   1  = Load 1 tile (we're only loading one floor tile)
     //   FloorTile = Pointer to the raw pixel data (16 bytes)
+
+
+
     set_bkg_data(1, 1, WallTile); // Tile 1 = wall
     //   1  = Start loading at background tile index #1 in VRAM
     //   1  = Load 1 tile
@@ -48,6 +51,17 @@ void main (void)
     set_bkg_data (8, 1, L_char);
     set_bkg_data (9, 1, I_char);
     set_bkg_data (10, 1, V_char);
+
+    set_bkg_data (20, 1, char0);
+    set_bkg_data (21, 1, char1);
+    set_bkg_data (22, 1, char2);
+    set_bkg_data (23, 1, char3);
+    set_bkg_data (24, 1, char4);
+    set_bkg_data (25, 1, char5);
+    set_bkg_data (26, 1, char6);
+    set_bkg_data (27, 1, char7);
+    set_bkg_data (28, 1, char8);
+    set_bkg_data (29, 1, char9);
 
     // Fill Screen with floor tiles
     fill_bkg_rect(0, 0, 20, 18, 0);
@@ -76,6 +90,8 @@ void main (void)
     set_bkg_tile_xy(14, 0, 6); // E
     set_bkg_tile_xy(15, 0, 2); // S
     set_bkg_tile_xy(16, 0, 7); // :
+
+
 
     // set up graphics
     DISPLAY_ON;
@@ -119,6 +135,9 @@ void main (void)
     // Main Loop
     while (1)
     {
+        draw_number(7, 0, player.score);
+        draw_number(17, 0, player.lives);
+
         if (bulletFrameCounter > 0) bulletFrameCounter++;
         if (bulletFrameCounter >= firingRateFrames) bulletFrameCounter = 0;
 
@@ -265,32 +284,13 @@ void main (void)
     }
 }
 
-
-int rle_decompress(const uint8_t* in, size_t in_len, uint8_t* out, size_t out_max)
+void draw_number(uint8_t x, uint8_t y, uint16_t number)
 {
-    size_t out_idx = 0;
-    size_t i = 0;
-
-    while (i < in_len) {
-        uint8_t count = in[i++];
-
-        if (count & 0x80) {
-            // Run
-            uint8_t val = in[i++];
-            uint8_t real_count = count & 0x7F;
-            if (out_idx + real_count > out_max) return -1;
-            for (uint8_t j = 0; j < real_count; j++) {
-                out[out_idx++] = val;
-            }
-        } else {
-            // Literal block
-            if (i + count > in_len || out_idx + count > out_max) return -1;
-            for (uint8_t j = 0; j < count; j++) {
-                out[out_idx++] = in[i++];
-            }
-        }
-    }
-    return (int)out_idx;
+    set_bkg_tile_xy(x+2, y, 20 + (number % 10));        // units
+    number /= 10;
+    set_bkg_tile_xy(x+1, y, 20 + (number % 10));        // tens
+    number /= 10;
+    set_bkg_tile_xy(x,   y, 20 + (number % 10));        // hundreds
 }
 
 // export PATH=$PATH:/opt/gbdk/bin
