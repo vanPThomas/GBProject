@@ -124,7 +124,7 @@ void main (void)
     Bullet bullet1 = {0, 0, 2, 2, 0, 2};
     Bullet bullet2 = {0, 0, 2, 2, 0, 3};
     Bullet bullet3 = {0, 0, 2, 2, 0, 4};
-    Player player = {84, 84, 1, 0, 3, 0, 2, 2};
+    Player player = {84, 84, 1, 0, 3, 0, 2, 2}; // x, y, facing left, score, lives, bullets fired, verical shooting direction, horizontal shooting direction
     
     move_sprite(0,player.x, player.y);  //initial position
 
@@ -135,6 +135,11 @@ void main (void)
     // Main Loop
     while (1)
     {
+        if (player.lives < 1)
+        {
+            printf("Game Over");
+            break;
+        }
         draw_number(7, 0, player.score);
         draw_number(17, 0, player.lives);
 
