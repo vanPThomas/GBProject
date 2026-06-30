@@ -26,6 +26,7 @@ typedef struct {
 void draw_number(uint8_t x, uint8_t y, uint16_t number);
 void set_background_data(void);
 void fill_background(void);
+void set_and_index_spriteData(void);
 
 void main (void)
 {
@@ -37,29 +38,8 @@ void main (void)
     SHOW_SPRITES;
     SHOW_BKG;
 
-    set_sprite_data(0,1,PlayerSpriteLeftFacing);  // index 0, load sprite into vram, same parameter concept as in the set_bkg_data
-    set_sprite_data(1,1,PlayerSpriteRightFacing);
-    set_sprite_tile(0,0);               // sprite 0 uses tile 0
-    set_sprite_tile(1,1);
-    /*
-    Important explanation: set_sprite_data loads the sprite into vram at a certyain index.
-    set_sprite_tile puts it in the list of 40 sprites that can be used. To boil it down:
-    set_sprite_data(0, 1, BulletSprite);
-    set_sprite_tile(0, 0);
-    set_sprite_tile(1, 0);
-    set_sprite_tile(2, 0);
-    This could be done when the player shot 3 times. here you say that this one sprite needs three spots in the list of 40 sprites.
-    Now it can be printed to screen 3 times:
-    move_sprite(0, bullet1_x, bullet1_y);   // Move first bullet
-    move_sprite(1, bullet2_x, bullet2_y);   // Move second bullet
-    move_sprite(2, bullet3_x, bullet3_y);   // Move third bullet
-    */
+    set_and_index_spriteData();
 
-    set_sprite_data (2, 1, BulletSprite);
-    set_sprite_tile (2, 2); // bullet index 2
-    set_sprite_tile (3, 2); // bullet index 3
-    set_sprite_tile (4, 2); // bullet index 4
-    
     Bullet bullet1 = {0, 0, 2, 2, 0, 2};
     Bullet bullet2 = {0, 0, 2, 2, 0, 3};
     Bullet bullet3 = {0, 0, 2, 2, 0, 4};
@@ -305,6 +285,33 @@ void fill_background(void)
     set_bkg_tile_xy(14, 0, 6); // E
     set_bkg_tile_xy(15, 0, 2); // S
     set_bkg_tile_xy(16, 0, 7); // :
+}
+
+void set_and_index_spriteData(void)
+{
+    set_sprite_data(0,1,PlayerSpriteLeftFacing);  // index 0, load sprite into vram, same parameter concept as in the set_bkg_data
+    set_sprite_data(1,1,PlayerSpriteRightFacing);
+    set_sprite_tile(0,0);               // sprite 0 uses tile 0
+    set_sprite_tile(1,1);
+    /*
+    Important explanation: set_sprite_data loads the sprite into vram at a certyain index.
+    set_sprite_tile puts it in the list of 40 sprites that can be used. To boil it down:
+    set_sprite_data(0, 1, BulletSprite);
+    set_sprite_tile(0, 0);
+    set_sprite_tile(1, 0);
+    set_sprite_tile(2, 0);
+    This could be done when the player shot 3 times. here you say that this one sprite needs three spots in the list of 40 sprites.
+    Now it can be printed to screen 3 times:
+    move_sprite(0, bullet1_x, bullet1_y);   // Move first bullet
+    move_sprite(1, bullet2_x, bullet2_y);   // Move second bullet
+    move_sprite(2, bullet3_x, bullet3_y);   // Move third bullet
+    */
+
+    set_sprite_data (2, 1, BulletSprite);
+    set_sprite_tile (2, 2); // bullet index 2
+    set_sprite_tile (3, 2); // bullet index 3
+    set_sprite_tile (4, 2); // bullet index 4
+    
 }
 
 // export PATH=$PATH:/opt/gbdk/bin
