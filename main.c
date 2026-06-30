@@ -27,6 +27,7 @@ void draw_number(uint8_t x, uint8_t y, uint16_t number);
 void set_background_data(void);
 void fill_background(void);
 void set_and_index_spriteData(void);
+void update_and_print_bullet_location(Bullet bullets[]);
 
 void main (void)
 {
@@ -152,45 +153,7 @@ void main (void)
             }
         }
 
-        // update all bullets location and print
-        for (uint8_t i = 0; i < 3; i++)
-        {
-            if (bullets[i].active)
-            {
-                if (bullets[i].dir_horizontal == 0)
-                {
-                    bullets[i].x += 2;
-                }
-                if (bullets[i].dir_horizontal == 1)
-                {
-                    bullets[i].x -= 2;
-                }
-                if (bullets[i].dir_vertical == 0)
-                {
-                    bullets[i].y -= 2;
-                }
-                if (bullets[i].dir_vertical == 1)
-                {
-                    bullets[i].y += 2;
-                }
-                move_sprite (bullets[i].spriteIndex, bullets[i].x, bullets[i].y);
-                
-            }
-    
-            // Detect if bullet goes off screen and delete it
-            if (bullets[i].active)
-            {
-                if (bullets[i].x < 16 || bullets[i].x > 152 || bullets[i].y < 32 || bullets[i].y > 144)
-                {
-                    bullets[i].x = 0;
-                    bullets[i].y = 0;
-                    bullets[i].active = 0;
-                    bullets[i].dir_horizontal = 2;
-                    bullets[i].dir_vertical = 2;
-                    move_sprite (bullets[i].spriteIndex, 0, 0);
-                }
-            }
-        }
+        update_and_print_bullet_location(bullets);
 
         // update player sprite position
         if(player.facingLeft == 1)
@@ -312,6 +275,49 @@ void set_and_index_spriteData(void)
     set_sprite_tile (3, 2); // bullet index 3
     set_sprite_tile (4, 2); // bullet index 4
     
+}
+
+void update_and_print_bullet_location(Bullet bullets[])
+{
+    // update all bullets location and print
+    for (uint8_t i = 0; i < 3; i++)
+    {
+        if (bullets[i].active)
+        {
+            if (bullets[i].dir_horizontal == 0)
+            {
+                bullets[i].x += 2;
+            }
+            if (bullets[i].dir_horizontal == 1)
+            {
+                bullets[i].x -= 2;
+            }
+            if (bullets[i].dir_vertical == 0)
+            {
+                bullets[i].y -= 2;
+            }
+            if (bullets[i].dir_vertical == 1)
+            {
+                bullets[i].y += 2;
+            }
+            move_sprite (bullets[i].spriteIndex, bullets[i].x, bullets[i].y);
+            
+        }
+
+        // Detect if bullet goes off screen and delete it
+        if (bullets[i].active)
+        {
+            if (bullets[i].x < 16 || bullets[i].x > 152 || bullets[i].y < 32 || bullets[i].y > 144)
+            {
+                bullets[i].x = 0;
+                bullets[i].y = 0;
+                bullets[i].active = 0;
+                bullets[i].dir_horizontal = 2;
+                bullets[i].dir_vertical = 2;
+                move_sprite (bullets[i].spriteIndex, 0, 0);
+            }
+        }
+    }
 }
 
 // export PATH=$PATH:/opt/gbdk/bin
