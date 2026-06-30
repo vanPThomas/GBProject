@@ -28,6 +28,7 @@ void set_background_data(void);
 void fill_background(void);
 void set_and_index_spriteData(void);
 void update_and_print_bullet_location(Bullet bullets[]);
+void find_first_inactive_bullet(Bullet bullets[], Player player);
 
 void main (void)
 {
@@ -110,47 +111,8 @@ void main (void)
         if ((joy & J_A) && bulletFrameCounter == 0)
         {
             bulletFrameCounter++;
-            // Find first inactive bullet
-            for (uint8_t i = 0; i < 3; i++)
-            {
-                if(bullets[i].active == 0)
-                {
-                    bullets[i].active = 1;
-        
-                    bullets[i].dir_horizontal = 2;
-                    bullets[i].dir_vertical = 2;
-        
-                    if( player.horizontalShootingDirection == 0 || player.horizontalShootingDirection == 1 || player.verticalShootingDirection == 0 || player.verticalShootingDirection == 1)
-                    {
-                        bullets[i].x = player.x;
-                        bullets[i].y = player.y;
-                    }
-        
-                    // Set bullet starting location and direction
-                    if(player.horizontalShootingDirection == 0) //shooting right
-                    {
-                        bullets[i].x = player.x + 5;
-                        bullets[i].dir_horizontal = 0;
-                    }
-                    if(player.horizontalShootingDirection == 1) //shooting left
-                    {
-                        bullets[i].x = player.x - 5;
-                        bullets[i].dir_horizontal = 1;
-                    }
-                    if(player.verticalShootingDirection == 0) //shooting up
-                    {
-                        bullets[i].y = player.y - 5;
-                        bullets[i].dir_vertical = 0;
-                    }
-                    if(player.verticalShootingDirection == 1) //shooting down
-                    {
-                        bullets[i].y = player.y + 5;
-                        bullets[i].dir_vertical = 1;
-                    }
-                    move_sprite (bullets[i].spriteIndex, bullets[i].x, bullets[i].y);
-                    break;
-                }
-            }
+            // find fist inactive bullet in bullet list and have the player fire it.
+            find_first_inactive_bullet(bullets, player);
         }
 
         update_and_print_bullet_location(bullets);
@@ -316,6 +278,51 @@ void update_and_print_bullet_location(Bullet bullets[])
                 bullets[i].dir_vertical = 2;
                 move_sprite (bullets[i].spriteIndex, 0, 0);
             }
+        }
+    }
+}
+
+void find_first_inactive_bullet(Bullet bullets[], Player player)
+{
+    // Find first inactive bullet
+    for (uint8_t i = 0; i < 3; i++)
+    {
+        if(bullets[i].active == 0)
+        {
+            bullets[i].active = 1;
+
+            bullets[i].dir_horizontal = 2;
+            bullets[i].dir_vertical = 2;
+
+            if( player.horizontalShootingDirection == 0 || player.horizontalShootingDirection == 1 || player.verticalShootingDirection == 0 || player.verticalShootingDirection == 1)
+            {
+                bullets[i].x = player.x;
+                bullets[i].y = player.y;
+            }
+
+            // Set bullet starting location and direction
+            if(player.horizontalShootingDirection == 0) //shooting right
+            {
+                bullets[i].x = player.x + 5;
+                bullets[i].dir_horizontal = 0;
+            }
+            if(player.horizontalShootingDirection == 1) //shooting left
+            {
+                bullets[i].x = player.x - 5;
+                bullets[i].dir_horizontal = 1;
+            }
+            if(player.verticalShootingDirection == 0) //shooting up
+            {
+                bullets[i].y = player.y - 5;
+                bullets[i].dir_vertical = 0;
+            }
+            if(player.verticalShootingDirection == 1) //shooting down
+            {
+                bullets[i].y = player.y + 5;
+                bullets[i].dir_vertical = 1;
+            }
+            move_sprite (bullets[i].spriteIndex, bullets[i].x, bullets[i].y);
+            break;
         }
     }
 }
