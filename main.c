@@ -29,6 +29,8 @@ void fill_background(void);
 void set_and_index_spriteData(void);
 void update_and_print_bullet_location(Bullet bullets[]);
 void find_first_inactive_bullet(Bullet bullets[], Player player);
+void move_player(Player *player, uint8_t joy);
+void clamp_player_location(Player *player);
 
 void main (void)
 {
@@ -70,41 +72,9 @@ void main (void)
         uint8_t joy = joypad(); // read curent dpad and button state
 
         //========== Player Movement ==========
-        if ((joy & J_RIGHT) || (joy & J_LEFT) || (joy & J_UP) || (joy & J_DOWN))
-        {
-            player.verticalShootingDirection = 2;
-            player.horizontalShootingDirection = 2;
-        }
+        move_player(&player, joy);
 
-        //move left
-        if (joy & J_RIGHT)
-        {
-            player.x++;
-            player.facingLeft = 0;
-            player.horizontalShootingDirection = 0;
-        }
-        if (joy & J_LEFT)
-        {
-            player.x--;
-            player.facingLeft = 1;
-            player.horizontalShootingDirection = 1;
-        }
-        if (joy & J_UP)
-        {
-            player.y--;
-            player.verticalShootingDirection = 0;
-        }
-        if (joy & J_DOWN)
-        {
-            player.y++;
-            player.verticalShootingDirection = 1;
-        }
-
-        // clamp player to screen
-        if (player.x < 16) player.x = 16;
-        if (player.x > 152) player.x = 152;
-        if (player.y < 32) player.y = 32;
-        if (player.y > 144) player.y = 144;
+        clamp_player_location(&player);
 
         // ========== Shooting ==========
         // detect if player shot
@@ -239,6 +209,8 @@ void set_and_index_spriteData(void)
     
 }
 
+// Note: Bullet bullets[] is automatically treated as Bullet *bullets in C
+// (array decay to pointer). That's why we can modify the original array.
 void update_and_print_bullet_location(Bullet bullets[])
 {
     // update all bullets location and print
@@ -325,6 +297,48 @@ void find_first_inactive_bullet(Bullet bullets[], Player player)
             break;
         }
     }
+}
+
+void move_player(Player *player, uint8_t joy)
+{
+    if ((joy & J_RIGHT) || (joy & J_LEFT) || (joy & J_UP) || (joy & J_DOWN))
+    {
+        player->verticalShootingDirection = 2;
+        player->horizontalShootingDirection = 2;
+    }
+
+    //move left
+    if (joy & J_RIGHT)
+    {
+        player->x++;
+        player->facingLeft = 0;
+        player->horizontalShootingDirection = 0;
+    }
+    if (joy & J_LEFT)
+    {
+        player->x--;
+        player->facingLeft = 1;
+        player->horizontalShootingDirection = 1;
+    }
+    if (joy & J_UP)
+    {
+        player->y--;
+        player->verticalShootingDirection = 0;
+    }
+    if (joy & J_DOWN)
+    {
+        player->y++;
+        player->verticalShootingDirection = 1;
+    }
+}
+
+void clamp_player_location(Player *player)
+{
+    // clamp player to screen
+    if (player->x < 16) player->x = 16;
+    if (player->x > 152) player->x = 152;
+    if (player->y < 32) player->y = 32;
+    if (player->y > 144) player->y = 144;
 }
 
 // export PATH=$PATH:/opt/gbdk/bin
