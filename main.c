@@ -31,6 +31,7 @@ void update_and_print_bullet_location(Bullet bullets[]);
 void find_first_inactive_bullet(Bullet bullets[], Player player);
 void move_player(Player *player, uint8_t joy);
 void clamp_player_location(Player *player);
+void update_player_location(Player player);
 
 void main (void)
 {
@@ -87,17 +88,7 @@ void main (void)
 
         update_and_print_bullet_location(bullets);
 
-        // update player sprite position
-        if(player.facingLeft == 1)
-        {
-            move_sprite (0, player.x, player.y);
-            move_sprite (1, 0, 0);
-        }
-        else
-        {
-            move_sprite (1, player.x, player.y);
-            move_sprite (0, 0, 0);
-        }
+        update_player_location(player);
 
         wait_vbl_done(); // Wait for next frame
     }
@@ -339,6 +330,21 @@ void clamp_player_location(Player *player)
     if (player->x > 152) player->x = 152;
     if (player->y < 32) player->y = 32;
     if (player->y > 144) player->y = 144;
+}
+
+void update_player_location(Player player)
+{
+    // update player sprite position
+    if(player.facingLeft == 1)
+    {
+        move_sprite (0, player.x, player.y);
+        move_sprite (1, 0, 0);
+    }
+    else
+    {
+        move_sprite (1, player.x, player.y);
+        move_sprite (0, 0, 0);
+    }
 }
 
 // export PATH=$PATH:/opt/gbdk/bin
