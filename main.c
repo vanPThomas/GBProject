@@ -35,6 +35,8 @@ void update_player_location(Player player);
 
 void main (void)
 {
+
+    // Prepare background
     set_background_data();    
     fill_background();
 
@@ -43,30 +45,38 @@ void main (void)
     SHOW_SPRITES;
     SHOW_BKG;
 
+    // Prepare sprites
     set_and_index_spriteData();
 
+    // Ready the actual player and bullet varriables
     Bullet bullet1 = {0, 0, 2, 2, 0, 2};
     Bullet bullet2 = {0, 0, 2, 2, 0, 3};
-    Bullet bullet3 = {0, 0, 2, 2, 0, 4};
+    Bullet bullet3 = {0, 0, 2, 2, 0, 4}; // x, y, horizontal direction, vertical direction, is bullet active, sprite index
     Player player = {84, 84, 1, 0, 3, 0, 2, 2}; // x, y, facing left, score, lives, bullets fired, verical shooting direction, horizontal shooting direction
     
     move_sprite(0,player.x, player.y);  //initial position
 
     Bullet bullets[3] = {bullet1, bullet2, bullet3};   // Creates 3 bullets
+
+    // This sets bullet firing rate
     uint8_t bulletFrameCounter = 0;
     const uint8_t firingRateFrames = 20;
 
     // Main Loop
     while (1)
     {
+        // check if player is actually alive
         if (player.lives < 1)
         {
             printf("Game Over");
             break;
         }
+
+        // Draw lives and score
         draw_number(7, 0, player.score);
         draw_number(17, 0, player.lives);
 
+        
         if (bulletFrameCounter > 0) bulletFrameCounter++;
         if (bulletFrameCounter >= firingRateFrames) bulletFrameCounter = 0;
 
