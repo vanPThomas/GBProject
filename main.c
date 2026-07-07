@@ -6,10 +6,6 @@
 #include "player.h"
 #include "bullet.h"
 
-
-void draw_number(uint8_t x, uint8_t y, uint16_t number);
-
-
 void main (void)
 {
 
@@ -79,15 +75,6 @@ void main (void)
 
         wait_vbl_done(); // Wait for next frame
     }
-}
-
-void draw_number(uint8_t x, uint8_t y, uint16_t number)
-{
-    set_bkg_tile_xy(x+2, y, 20 + (number % 10));        // units
-    number /= 10;
-    set_bkg_tile_xy(x+1, y, 20 + (number % 10));        // tens
-    number /= 10;
-    set_bkg_tile_xy(x,   y, 20 + (number % 10));        // hundreds
 }
 
 

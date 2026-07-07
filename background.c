@@ -69,3 +69,12 @@ void fill_background(void)
     set_bkg_tile_xy(15, 0, 2); // S
     set_bkg_tile_xy(16, 0, 7); // :
 }
+
+void draw_number(uint8_t x, uint8_t y, uint16_t number)
+{
+    set_bkg_tile_xy(x+2, y, 20 + (number % 10));        // units
+    number /= 10;
+    set_bkg_tile_xy(x+1, y, 20 + (number % 10));        // tens
+    number /= 10;
+    set_bkg_tile_xy(x,   y, 20 + (number % 10));        // hundreds
+}
