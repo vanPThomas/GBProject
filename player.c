@@ -8,10 +8,14 @@ void move_player(Player *player, uint8_t joy)
         player->horizontalShootingDirection = 2;
     }
 
-    //move left
     if (joy & J_RIGHT)
     {
-        player->x++;
+        // player->x++;
+        __asm
+            ld   hl, #_player   ; address of player.x (first member)
+            inc  (hl)
+        __endasm;
+
         player->facingLeft = 0;
         player->horizontalShootingDirection = 0;
     }
