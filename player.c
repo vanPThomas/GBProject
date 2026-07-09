@@ -10,11 +10,7 @@ void move_player(Player *player, uint8_t joy)
 
     if (joy & J_RIGHT)
     {
-        // player->x++;
-        __asm
-            ld   hl, #_player   ; address of player.x (first member)
-            inc  (hl)
-        __endasm;
+        player->x++;
 
         player->facingLeft = 0;
         player->horizontalShootingDirection = 0;
