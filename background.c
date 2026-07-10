@@ -9,8 +9,6 @@ void set_background_data(void)
     //   1  = Load 1 tile (we're only loading one floor tile)
     //   FloorTile = Pointer to the raw pixel data (16 bytes)
 
-
-
     set_bkg_data(1, 1, WallTile); // Tile 1 = wall
     //   1  = Start loading at background tile index #1 in VRAM
     //   1  = Load 1 tile

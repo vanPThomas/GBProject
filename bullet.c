@@ -72,6 +72,7 @@ void update_and_print_bullet_location(Bullet bullets[])
     }
 }
 
+// Find the first useable bullet in the list of fireable bullets
 void find_first_inactive_bullet(Bullet bullets[], Player player)
 {
     // Find first inactive bullet

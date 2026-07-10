@@ -1,5 +1,6 @@
 #include "player.h"
 
+//  Move player based on input
 void move_player(Player *player, uint8_t joy)
 {
     if ((joy & J_RIGHT) || (joy & J_LEFT) || (joy & J_UP) || (joy & J_DOWN))
@@ -33,6 +34,7 @@ void move_player(Player *player, uint8_t joy)
     }
 }
 
+// Clamp player in the screen
 void clamp_player_location(Player *player)
 {
     // clamp player to screen
