@@ -6,6 +6,16 @@
 #include "player.h"
 #include "bullet.h"
 
+typedef struct {
+    uint8_t x;
+    uint8_t y;
+    uint8_t health;
+    uint8_t damage;
+    uint8_t bulletsFired;
+    uint8_t verticalShootingDirection;
+    uint8_t horizontalShootingDirection;
+} enemy;
+
 void main (void)
 {
 
