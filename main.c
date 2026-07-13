@@ -79,7 +79,7 @@ void main (void)
 
 
 // export PATH=$PATH:/opt/gbdk/bin
-// lcc -o game.gb main.c sprites.c background.c player.c bullet.c
+// lcc -o game.gb main.c sprites.c background.c player.c bullet.c enemy.c
 
 /*
 resolution: 160×144 pixels
