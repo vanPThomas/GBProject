@@ -6,16 +6,6 @@
 #include "player.h"
 #include "bullet.h"
 
-typedef struct {
-    uint8_t x;
-    uint8_t y;
-    uint8_t health;
-    uint8_t damage;
-    uint8_t bulletsFired;
-    uint8_t verticalShootingDirection;
-    uint8_t horizontalShootingDirection;
-} Enemy;
-
 void main (void)
 {
 
@@ -36,9 +26,6 @@ void main (void)
     Bullet bullet2 = {0, 0, 2, 2, 0, 3};
     Bullet bullet3 = {0, 0, 2, 2, 0, 4}; // x, y, horizontal direction, vertical direction, is bullet active, sprite index
     Player player = {84, 84, 1, 0, 3, 0, 2, 2}; // x, y, facing left, score, lives, bullets fired, verical shooting direction, horizontal shooting direction
-    Enemy enemy1 = {0, 0, 5, 1, 0, 2, 2};
-    Enemy enemy2 = {0, 0, 5, 1, 0, 2, 2};
-    Enemy enemy3 = {0, 0, 5, 1, 0, 2, 2};
 
     move_sprite(0,player.x, player.y);  //initial position
 
