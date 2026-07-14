@@ -1,32 +1,5 @@
 #include "bullet.h"
 
-void set_and_index_spriteData(void)
-{
-    set_sprite_data(0,1,PlayerSpriteLeftFacing);  // index 0, load sprite into vram, same parameter concept as in the set_bkg_data
-    set_sprite_data(1,1,PlayerSpriteRightFacing);
-    set_sprite_tile(0,0);               // sprite 0 uses tile 0
-    set_sprite_tile(1,1);
-    /*
-    Important explanation: set_sprite_data loads the sprite into vram at a certyain index.
-    set_sprite_tile puts it in the list of 40 sprites that can be used. To boil it down:
-    set_sprite_data(0, 1, BulletSprite);
-    set_sprite_tile(0, 0);
-    set_sprite_tile(1, 0);
-    set_sprite_tile(2, 0);
-    This could be done when the player shot 3 times. here you say that this one sprite needs three spots in the list of 40 sprites.
-    Now it can be printed to screen 3 times:
-    move_sprite(0, bullet1_x, bullet1_y);   // Move first bullet
-    move_sprite(1, bullet2_x, bullet2_y);   // Move second bullet
-    move_sprite(2, bullet3_x, bullet3_y);   // Move third bullet
-    */
-
-    set_sprite_data (2, 1, BulletSprite);
-    set_sprite_tile (2, 2); // bullet index 2
-    set_sprite_tile (3, 2); // bullet index 3
-    set_sprite_tile (4, 2); // bullet index 4
-    
-}
-
 // Note: Bullet bullets[] is automatically treated as Bullet *bullets in C
 // (array decay to pointer). That's why we can modify the original array.
 void update_and_print_bullet_location(Bullet bullets[])

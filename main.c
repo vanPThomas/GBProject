@@ -27,7 +27,7 @@ void main (void)
     Bullet bullet3 = {0, 0, 2, 2, 0, 4}; // x, y, horizontal direction, vertical direction, is bullet active, sprite index
     Player player = {84, 84, 1, 0, 3, 0, 2, 2}; // x, y, facing left, score, lives, bullets fired, verical shooting direction, horizontal shooting direction
 
-    move_sprite(0,player.x, player.y);  //initial position
+    move_sprite(0, player.x, player.y);  //initial position
 
     Bullet bullets[3] = {bullet1, bullet2, bullet3};   // Creates 3 bullets
 

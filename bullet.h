@@ -16,8 +16,6 @@ typedef struct {
     uint8_t spriteIndex;
 } Bullet;
 
-
-void set_and_index_spriteData(void);
 void update_and_print_bullet_location(Bullet bullets[]);
 void find_first_inactive_bullet(Bullet bullets[], Player player);
 

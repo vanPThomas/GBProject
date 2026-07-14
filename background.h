@@ -9,5 +9,6 @@
 void set_background_data(void);
 void fill_background(void);
 void draw_number(uint8_t x, uint8_t y, uint16_t number);
+void set_and_index_spriteData(void);
 
 #endif
