@@ -5,6 +5,7 @@
 #include "background.h"
 #include "player.h"
 #include "bullet.h"
+#include "enemy.h"
 
 void main (void)
 {
@@ -36,6 +37,9 @@ void main (void)
     // This sets bullet firing rate
     uint8_t bulletFrameCounter = 0;
     const uint8_t firingRateFrames = 20;
+
+    enemies[1].x = 40;
+    enemies[1].y = 40;    
 
     // Main Loop
     while (1)
