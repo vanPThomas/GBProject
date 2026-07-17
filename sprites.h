@@ -3,6 +3,7 @@
 
 extern unsigned char PlayerSpriteLeftFacing[];
 extern unsigned char PlayerSpriteRightFacing[];
+extern unsigned char EnemySprite[];
 extern unsigned char BulletSprite[];
 extern unsigned char WallTile[];
 extern unsigned char FloorTile[];
