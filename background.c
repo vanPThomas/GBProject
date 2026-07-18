@@ -100,5 +100,11 @@ void set_and_index_spriteData(void)
     set_sprite_data (2, 1, BulletSprite);
     set_sprite_tile (2, 2); // bullet index 2
     set_sprite_tile (3, 2); // bullet index 3
-    set_sprite_tile (4, 2); // bullet index 4    
+    set_sprite_tile (4, 2); // bullet index 4
+
+    set_sprite_data (3, 1, EnemySprite);
+    set_sprite_tile (5, 3);
+    set_sprite_tile (6, 3);
+    set_sprite_tile (7, 3);
+    
 }
