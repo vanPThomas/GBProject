@@ -44,6 +44,8 @@ void main (void)
     // Main Loop
     while (1)
     {
+        move_sprite(5, enemies[1].x, enemies[1].y);
+        
         // check if player is actually alive
         if (player.lives < 1)
         {
