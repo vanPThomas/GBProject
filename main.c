@@ -10,8 +10,6 @@
 
 void main (void)
 {
-    init_random();
-
     // Prepare background
     set_background_data();    
     fill_background();
