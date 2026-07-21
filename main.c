@@ -6,9 +6,11 @@
 #include "player.h"
 #include "bullet.h"
 #include "enemy.h"
+#include "utils.h"
 
 void main (void)
 {
+    init_random();
 
     // Prepare background
     set_background_data();    
@@ -38,8 +40,8 @@ void main (void)
     uint8_t bulletFrameCounter = 0;
     const uint8_t firingRateFrames = 20;
 
-    enemies[1].x = 40;
-    enemies[1].y = 40;    
+    enemies[1].x = random_between(16, 152);
+    enemies[1].y = random_between(16, 136);
 
     // Main Loop
     while (1)
@@ -87,7 +89,7 @@ void main (void)
 
 
 // export PATH=$PATH:/opt/gbdk/bin
-// lcc -o game.gb main.c sprites.c background.c player.c bullet.c enemy.c
+// lcc -o game.gb main.c sprites.c background.c player.c bullet.c enemy.c utils.c
 
 /*
 resolution: 160×144 pixels
