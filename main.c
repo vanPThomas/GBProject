@@ -38,13 +38,19 @@ void main (void)
     uint8_t bulletFrameCounter = 0;
     const uint8_t firingRateFrames = 20;
 
-    enemies[1].x = random_between(16, 152);
-    enemies[1].y = random_between(16, 136);
+    enemies[0].x = 50;
+    enemies[0].y = 50;
+    enemies[1].x = 20;
+    enemies[1].y = 100;
+    enemies[2].x = 100;
+    enemies[2].y = 100;
 
     // Main Loop
     while (1)
     {
-        move_sprite(5, enemies[1].x, enemies[1].y);
+        move_sprite(5, enemies[0].x, enemies[0].y);
+        move_sprite(6, enemies[1].x, enemies[1].y);
+        move_sprite(7, enemies[2].x, enemies[2].y);
         
         // check if player is actually alive
         if (player.lives < 1)
