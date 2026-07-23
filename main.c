@@ -28,6 +28,7 @@ void main (void)
     Bullet bullet3 = {0, 0, 2, 2, 0, 4}; // x, y, horizontal direction, vertical direction, is bullet active, sprite index
     Player player = {84, 84, 1, 0, 3, 0, 2, 2}; // x, y, facing left, score, lives, bullets fired, verical shooting direction, horizontal shooting direction
 
+    // Initialize three enemies
     init_enemies();
 
     move_sprite(0, player.x, player.y);  //initial position
@@ -38,6 +39,7 @@ void main (void)
     uint8_t bulletFrameCounter = 0;
     const uint8_t firingRateFrames = 20;
 
+    // Give enemies start positions
     enemies[0].x = 50;
     enemies[0].y = 50;
     enemies[1].x = 20;
@@ -48,6 +50,7 @@ void main (void)
     // Main Loop
     while (1)
     {
+        // draw enemies on the screen
         move_sprite(5, enemies[0].x, enemies[0].y);
         move_sprite(6, enemies[1].x, enemies[1].y);
         move_sprite(7, enemies[2].x, enemies[2].y);
