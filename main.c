@@ -6,7 +6,7 @@
 #include "player.h"
 #include "bullet.h"
 #include "enemy.h"
-#include "utils.h"
+// #include "utils.h"
 
 void main (void)
 {
