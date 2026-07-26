@@ -6,7 +6,7 @@
 #include "player.h"
 #include "bullet.h"
 #include "enemy.h"
-// #include "utils.h"
+#include "utils.h"
 
 void main (void)
 {
@@ -89,6 +89,14 @@ void main (void)
         update_and_print_bullet_location(bullets);
 
         update_player_location(player);
+
+        for (uint8_t i = 0; i < 3; i++)
+        {
+            if (check_collision(player.x, player.y, enemies[i].x, enemies[i].y) == 1)
+            {
+                player.score++;
+            }
+        }
 
         wait_vbl_done(); // Wait for next frame
     }
