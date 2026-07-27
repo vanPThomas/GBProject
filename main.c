@@ -90,11 +90,17 @@ void main (void)
 
         update_player_location(player);
 
-        for (uint8_t i = 0; i < 3; i++)
+        for (uint8_t j = 0; j < 3; j++)
         {
-            if (check_collision(player.x, player.y, enemies[i].x, enemies[i].y) == 1)
+            for (uint8_t i = 0; i < 3; i++)
             {
-                player.score++;
+                if (check_collision(bullets[j].x, bullets[j].y, enemies[i].x, enemies[i].y) == 1)
+                {
+                    player.score++;
+                    bullets[j].x = 0;
+                    bullets[j].y = 0;
+                    bullets[j].active = 0;
+                }
             }
         }
 
