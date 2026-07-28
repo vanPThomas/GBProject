@@ -42,10 +42,13 @@ void main (void)
     // Give enemies start positions
     enemies[0].x = 50;
     enemies[0].y = 50;
+    enemies[0].active = 1;
     enemies[1].x = 20;
     enemies[1].y = 100;
+    enemies[1].active = 1;
     enemies[2].x = 100;
     enemies[2].y = 100;
+    enemies[2].active = 1;
 
     // Main Loop
     while (1)
@@ -86,24 +89,33 @@ void main (void)
             find_first_inactive_bullet(bullets, player);
         }
 
-        update_and_print_bullet_location(bullets);
-
-        update_player_location(player);
-
+        
         for (uint8_t j = 0; j < 3; j++)
         {
             for (uint8_t i = 0; i < 3; i++)
             {
-                if (check_collision(bullets[j].x, bullets[j].y, enemies[i].x, enemies[i].y) == 1)
+                if (enemies[i].active == 1 && check_collision(bullets[j].x, bullets[j].y, enemies[i].x, enemies[i].y) == 1)
                 {
-                    player.score++;
+                    enemies[i].health--;
                     bullets[j].x = 0;
                     bullets[j].y = 0;
                     bullets[j].active = 0;
+                    move_sprite (bullets[j].spriteIndex, 0, 0);
+
+                    if (enemies[i].health <= 0)
+                    {
+                        enemies[i].x = 0;
+                        enemies[i].y = 0;
+                        enemies[i].active = 0;
+                        player.score++;
+                    }
                 }
             }
         }
+        update_and_print_bullet_location(bullets);
 
+        update_player_location(player);
+        
         wait_vbl_done(); // Wait for next frame
     }
 }

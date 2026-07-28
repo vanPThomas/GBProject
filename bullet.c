@@ -7,7 +7,7 @@ void update_and_print_bullet_location(Bullet bullets[])
     // update all bullets location and print
     for (uint8_t i = 0; i < 3; i++)
     {
-        if (bullets[i].active)
+        if (bullets[i].active == 1)
         {
             if (bullets[i].dir_horizontal == 0)
             {
@@ -30,7 +30,7 @@ void update_and_print_bullet_location(Bullet bullets[])
         }
 
         // Detect if bullet goes off screen and delete it
-        if (bullets[i].active)
+        if (bullets[i].active == 1)
         {
             if (bullets[i].x < 16 || bullets[i].x > 152 || bullets[i].y < 32 || bullets[i].y > 144)
             {

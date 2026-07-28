@@ -9,7 +9,7 @@ void init_enemies(void)
     {
         enemies[i].x = 0;
         enemies[i].y = 0;
-        enemies[i].health = 2;           // example
+        enemies[i].health = 3;
         enemies[i].damage = 1;
         enemies[i].active = 0;
         enemies[i].spriteIndex = 5 + i;  // use sprite slots 5,6,7,...
