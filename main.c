@@ -7,17 +7,27 @@
 #include "bullet.h"
 #include "enemy.h"
 #include "utils.h"
+#include <rand.h>
 
 void main (void)
 {
-    // Prepare background
-    set_background_data();    
-    fill_background();
+    unsigned int seed = 0;
+    
+    gotoxy(0,10);
+    printf("Press any key !");
+    gotoxy(0,0);
 
+    while(!joypad()){seed++; if(seed>=255)seed=1;}
+    waitpadup();
+    initrand(seed);
     // set up graphics
     DISPLAY_ON;
     SHOW_SPRITES;
     SHOW_BKG;
+    // Prepare background
+    set_background_data();    
+    fill_background();
+
 
     // Prepare sprites
     set_and_index_spriteData();
@@ -50,9 +60,11 @@ void main (void)
     enemies[2].y = 100;
     enemies[2].active = 1;
 
+
     // Main Loop
     while (1)
     {
+       
         // draw enemies on the screen
         move_sprite(5, enemies[0].x, enemies[0].y);
         move_sprite(6, enemies[1].x, enemies[1].y);
@@ -66,6 +78,7 @@ void main (void)
         }
 
         // Draw lives and score
+        player.score = rand();
         draw_number(7, 0, player.score);
         draw_number(17, 0, player.lives);
 
