@@ -11,19 +11,23 @@
 
 void main (void)
 {
-    unsigned int seed = 0;
+    // unsigned int seed = 0;
     
-    gotoxy(0,10);
-    printf("Press any key !");
-    gotoxy(0,0);
+    generate_randseed();
 
-    while(!joypad()){seed++; if(seed>=255)seed=1;}
-    waitpadup();
-    initrand(seed);
+    // gotoxy(0,10);
+    // printf("Press any key !");
+    // gotoxy(0,0);
+
+    // while(!joypad()){seed++; if(seed>=255)seed=1;}
+    // waitpadup();
+    // initrand(seed);
+
     // set up graphics
     DISPLAY_ON;
     SHOW_SPRITES;
     SHOW_BKG;
+
     // Prepare background
     set_background_data();    
     fill_background();

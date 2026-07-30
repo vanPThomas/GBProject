@@ -2,12 +2,10 @@
 #include "utils.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include <gbdk/console.h>
+#include <rand.h>
 
-// uint8_t random_between(uint8_t min, uint8_t max)
-// {
-//     int value = rand() % (max - min + 1) + min;
-//     return (uint8_t) value;
-// }
+unsigned int seed = 0;
 
 // Returns 1 if the two sprites are overlapping, 0 otherwise
 uint8_t check_collision(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2)
@@ -22,4 +20,15 @@ uint8_t check_collision(uint8_t x1, uint8_t y1, uint8_t x2, uint8_t y2)
         return 1;   // Collision!
     }
     return 0;       // No collision
+}
+
+void generate_randseed(void)
+{
+    gotoxy(0,10);
+    printf("Press any key !");
+    gotoxy(0,0);
+
+    while(!joypad()){seed++; if(seed>=255)seed=1;}
+    waitpadup();
+    initrand(seed);
 }
