@@ -11,17 +11,8 @@
 
 void main (void)
 {
-    // unsigned int seed = 0;
     
     generate_randseed();
-
-    // gotoxy(0,10);
-    // printf("Press any key !");
-    // gotoxy(0,0);
-
-    // while(!joypad()){seed++; if(seed>=255)seed=1;}
-    // waitpadup();
-    // initrand(seed);
 
     // set up graphics
     DISPLAY_ON;
