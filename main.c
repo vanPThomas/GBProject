@@ -82,7 +82,7 @@ void main (void)
         }
 
         // Draw lives and score
-        player.score = rand();
+        player.score = generate_random_uint8_t_number();
         draw_number(7, 0, player.score);
         draw_number(17, 0, player.lives);
 

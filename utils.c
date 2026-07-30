@@ -32,3 +32,9 @@ void generate_randseed(void)
     waitpadup();
     initrand(seed);
 }
+
+uint8_t generate_random_uint8_t_number(void)
+{
+    uint8_t randnum = rand();
+    return randnum;
+} 
