@@ -37,4 +37,13 @@ uint8_t generate_random_uint8_t_number(void)
 {
     uint8_t randnum = rand();
     return randnum;
-} 
+}
+
+uint8_t generate_random_number_between(uint8_t min, uint8_t max)
+{
+    uint8_t randnum = rand();
+    while (randnum < min || randnum > max)
+        randnum = rand();
+
+        return randnum;
+}
