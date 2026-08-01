@@ -45,16 +45,7 @@ void main (void)
     const uint8_t firingRateFrames = 20;
 
     // Give enemies start positions
-    enemies[0].x = generate_random_number_between(20, 140);
-    enemies[0].y = generate_random_number_between(20, 124);
-    enemies[0].active = 1;
-    enemies[1].x = generate_random_number_between(20, 140);
-    enemies[1].y = generate_random_number_between(20, 124);
-    enemies[1].active = 1;
-    enemies[2].x = generate_random_number_between(20, 140);
-    enemies[2].y = generate_random_number_between(20, 124);
-    enemies[2].active = 1;
-
+    activate_enemies();
 
     // Main Loop
     while (1)
@@ -73,7 +64,6 @@ void main (void)
         }
 
         // Draw lives and score
-        player.score = 0;
         draw_number(7, 0, player.score);
         draw_number(17, 0, player.lives);
 

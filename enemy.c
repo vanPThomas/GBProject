@@ -1,5 +1,7 @@
 #include <gb/gb.h>
 #include "enemy.h"
+#include "utils.h"
+
 
 Enemy enemies[MAX_ENEMIES];
 
@@ -26,4 +28,17 @@ void update_enemies(void)
             move_sprite(enemies[i].spriteIndex, enemies[i].x, enemies[i].y);
         }
     }
+}
+
+void activate_enemies(void)
+{
+    enemies[0].x = generate_random_number_between(20, 140);
+    enemies[0].y = generate_random_number_between(20, 124);
+    enemies[0].active = 1;
+    enemies[1].x = generate_random_number_between(20, 140);
+    enemies[1].y = generate_random_number_between(20, 124);
+    enemies[1].active = 1;
+    enemies[2].x = generate_random_number_between(20, 140);
+    enemies[2].y = generate_random_number_between(20, 124);
+    enemies[2].active = 1;
 }

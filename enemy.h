@@ -16,5 +16,6 @@ extern Enemy enemies[MAX_ENEMIES];
 
 void init_enemies(void);
 void update_enemies(void);
+void activate_enemies(void);
 
 #endif
