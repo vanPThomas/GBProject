@@ -52,9 +52,7 @@ void main (void)
     {
        
         // draw enemies on the screen
-        move_sprite(5, enemies[0].x, enemies[0].y);
-        move_sprite(6, enemies[1].x, enemies[1].y);
-        move_sprite(7, enemies[2].x, enemies[2].y);
+        draw_enemies();
         
         // check if player is actually alive
         if (player.lives < 1)

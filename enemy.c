@@ -42,3 +42,10 @@ void activate_enemies(void)
     enemies[2].y = generate_random_number_between(20, 124);
     enemies[2].active = 1;
 }
+
+void draw_enemies(void)
+{
+    move_sprite(5, enemies[0].x, enemies[0].y);
+    move_sprite(6, enemies[1].x, enemies[1].y);
+    move_sprite(7, enemies[2].x, enemies[2].y);
+}
