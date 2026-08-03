@@ -28,17 +28,13 @@ void main (void)
     set_and_index_spriteData();
 
     // Ready the actual player and bullet varriables
-    Bullet bullet1 = {0, 0, 2, 2, 0, 2};
-    Bullet bullet2 = {0, 0, 2, 2, 0, 3};
-    Bullet bullet3 = {0, 0, 2, 2, 0, 4}; // x, y, horizontal direction, vertical direction, is bullet active, sprite index
+    init_bullets();
     Player player = {84, 84, 1, 0, 3, 0, 2, 2}; // x, y, facing left, score, lives, bullets fired, verical shooting direction, horizontal shooting direction
 
     // Initialize three enemies
     init_enemies();
 
     move_sprite(0, player.x, player.y);  //initial position
-
-    Bullet bullets[3] = {bullet1, bullet2, bullet3};   // Creates 3 bullets
 
     // This sets bullet firing rate
     uint8_t bulletFrameCounter = 0;
@@ -82,7 +78,7 @@ void main (void)
         {
             bulletFrameCounter++;
             // find fist inactive bullet in bullet list and have the player fire it.
-            find_first_inactive_bullet(bullets, player);
+            find_first_inactive_bullet(player);
         }
 
         
@@ -108,7 +104,7 @@ void main (void)
                 }
             }
         }
-        update_and_print_bullet_location(bullets);
+        update_and_print_bullet_location();
 
         update_player_location(player);
         

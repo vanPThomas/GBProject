@@ -16,7 +16,12 @@ typedef struct {
     uint8_t spriteIndex;
 } Bullet;
 
-void update_and_print_bullet_location(Bullet bullets[]);
-void find_first_inactive_bullet(Bullet bullets[], Player player);
+#define MAX_BULLETS 3
+
+extern Bullet bullets[MAX_BULLETS];   // Creates 3 bullets
+
+void update_and_print_bullet_location(void);
+void find_first_inactive_bullet(Player player);
+void init_bullets(void);
 
 #endif

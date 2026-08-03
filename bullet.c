@@ -1,8 +1,11 @@
 #include "bullet.h"
 
+Bullet bullets[MAX_BULLETS];   // Creates 3 bullets
+
+
 // Note: Bullet bullets[] is automatically treated as Bullet *bullets in C
 // (array decay to pointer). That's why we can modify the original array.
-void update_and_print_bullet_location(Bullet bullets[])
+void update_and_print_bullet_location(void)
 {
     // update all bullets location and print
     for (uint8_t i = 0; i < 3; i++)
@@ -46,7 +49,7 @@ void update_and_print_bullet_location(Bullet bullets[])
 }
 
 // Find the first useable bullet in the list of fireable bullets
-void find_first_inactive_bullet(Bullet bullets[], Player player)
+void find_first_inactive_bullet(Player player)
 {
     // Find first inactive bullet
     for (uint8_t i = 0; i < 3; i++)
@@ -88,5 +91,18 @@ void find_first_inactive_bullet(Bullet bullets[], Player player)
             move_sprite (bullets[i].spriteIndex, bullets[i].x, bullets[i].y);
             break;
         }
+    }
+}
+
+void init_bullets(void)
+{
+    for (uint8_t i = 0; i < MAX_BULLETS; i++)
+    {
+        bullets[i].x = 0;
+        bullets[i].y = 0;
+        bullets[i].dir_horizontal = 2;   // 0=right, 1=left, 2=none
+        bullets[i].dir_vertical = 2;     // 0=up, 1=down, 2=none
+        bullets[i].active = 0;
+        bullets[i].spriteIndex = 2 + i;
     }
 }
