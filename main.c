@@ -29,7 +29,7 @@ void main (void)
 
     // Ready the actual player and bullet varriables
     init_bullets();
-    Player player = {84, 84, 1, 0, 3, 0, 2, 2}; // x, y, facing left, score, lives, bullets fired, verical shooting direction, horizontal shooting direction
+    init_player();
 
     // Initialize three enemies
     init_enemies();

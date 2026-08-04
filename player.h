@@ -17,8 +17,11 @@ typedef struct {
     uint8_t horizontalShootingDirection;
 } Player;
 
+extern Player player;
+
 void move_player(Player *player, uint8_t joy);
 void clamp_player_location(Player *player);
 void update_player_location(Player player);
+void init_player(void);
 
 #endif

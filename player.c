@@ -1,5 +1,7 @@
 #include "player.h"
 
+Player player;
+
 //  Move player based on input
 void move_player(Player *player, uint8_t joy)
 {
@@ -57,4 +59,16 @@ void update_player_location(Player player)
         move_sprite (1, player.x, player.y);
         move_sprite (0, 0, 0);
     }
+}
+
+void init_player(void)
+{
+    player.x = 84;
+    player.y = 84;
+    player.facingLeft = 1;
+    player.score = 0;
+    player.lives = 3;
+    player.bulletsFired = 0;
+    player.verticalShootingDirection = 2;
+    player.horizontalShootingDirection = 2;
 }
