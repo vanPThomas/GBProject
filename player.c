@@ -3,7 +3,7 @@
 Player player;
 
 //  Move player based on input
-void move_player(Player *player, uint8_t joy)
+void move_player(uint8_t joy)
 {
     if ((joy & J_RIGHT) || (joy & J_LEFT) || (joy & J_UP) || (joy & J_DOWN))
     {
@@ -37,7 +37,7 @@ void move_player(Player *player, uint8_t joy)
 }
 
 // Clamp player in the screen
-void clamp_player_location(Player *player)
+void clamp_player_location()
 {
     // clamp player to screen
     if (player->x < 16) player->x = 16;
@@ -46,7 +46,7 @@ void clamp_player_location(Player *player)
     if (player->y > 144) player->y = 144;
 }
 
-void update_player_location(Player player)
+void update_player_location()
 {
     // update player sprite position
     if(player.facingLeft == 1)

@@ -68,9 +68,9 @@ void main (void)
         uint8_t joy = joypad(); // read curent dpad and button state
 
         //========== Player Movement ==========
-        move_player(&player, joy);
+        move_player(joy);
 
-        clamp_player_location(&player);
+        clamp_player_location();
 
         // ========== Shooting ==========
         // detect if player shot
@@ -106,7 +106,7 @@ void main (void)
         }
         update_and_print_bullet_location();
 
-        update_player_location(player);
+        update_player_location();
         
         wait_vbl_done(); // Wait for next frame
     }
