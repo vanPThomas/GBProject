@@ -23,5 +23,6 @@ extern Bullet bullets[MAX_BULLETS];   // Creates 3 bullets
 void update_and_print_bullet_location(void);
 void find_first_inactive_bullet(Player player);
 void init_bullets(void);
+void reset_bullet(uint8_t j);
 
 #endif

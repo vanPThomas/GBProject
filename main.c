@@ -89,10 +89,7 @@ void main (void)
                 if (enemies[i].active == 1 && check_collision(bullets[j].x, bullets[j].y, enemies[i].x, enemies[i].y) == 1)
                 {
                     enemies[i].health--;
-                    bullets[j].x = 0;
-                    bullets[j].y = 0;
-                    bullets[j].active = 0;
-                    move_sprite (bullets[j].spriteIndex, 0, 0);
+                    reset_bullet(j);
 
                     if (enemies[i].health <= 0)
                     {

@@ -106,3 +106,11 @@ void init_bullets(void)
         bullets[i].spriteIndex = 2 + i;
     }
 }
+
+void reset_bullet(uint8_t j)
+{
+    bullets[j].x = 0;
+    bullets[j].y = 0;
+    bullets[j].active = 0;
+    move_sprite (bullets[j].spriteIndex, 0, 0);
+}
