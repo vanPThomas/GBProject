@@ -20,8 +20,8 @@ typedef struct {
 extern Player player;
 
 void move_player(uint8_t joy);
-void clamp_player_location();
-void update_player_location();
+void clamp_player_location(void);
+void update_player_location(void);
 void init_player(void);
 
 #endif
