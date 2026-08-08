@@ -49,3 +49,10 @@ void draw_enemies(void)
     move_sprite(6, enemies[1].x, enemies[1].y);
     move_sprite(7, enemies[2].x, enemies[2].y);
 }
+
+void reset_enemy(uint8_t i)
+{
+    enemies[i].x = 0;
+    enemies[i].y = 0;
+    enemies[i].active = 0;
+}

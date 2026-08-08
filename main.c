@@ -93,9 +93,7 @@ void main (void)
 
                     if (enemies[i].health <= 0)
                     {
-                        enemies[i].x = 0;
-                        enemies[i].y = 0;
-                        enemies[i].active = 0;
+                        reset_enemy(i);
                         player.score++;
                     }
                 }
