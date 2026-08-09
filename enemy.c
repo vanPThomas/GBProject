@@ -15,6 +15,8 @@ void init_enemies(void)
         enemies[i].damage = 1;
         enemies[i].active = 0;
         enemies[i].spriteIndex = 5 + i;  // use sprite slots 5,6,7,...
+        enemies[i].target_x = 0;
+        enemies[i].target.y = 0;
     }
 }
 

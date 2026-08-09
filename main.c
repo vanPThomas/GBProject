@@ -46,7 +46,6 @@ void main (void)
     // Main Loop
     while (1)
     {
-       
         // draw enemies on the screen
         draw_enemies();
         

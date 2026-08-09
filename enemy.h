@@ -8,6 +8,8 @@ typedef struct {
     uint8_t damage;
     uint8_t active;                    // 0 = dead/inactive, 1 = alive
     uint8_t spriteIndex;               // e.g. 5,6,7 for enemy sprites
+    uint8_t target_x;
+    uint8_t target_y;
 } Enemy;
 
 #define MAX_ENEMIES 5
