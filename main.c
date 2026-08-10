@@ -46,6 +46,14 @@ void main (void)
     // Main Loop
     while (1)
     {
+        // Player is Enemies target
+        for (uint8_t i = 0; i < MAX_ENEMIES; i++)
+        {
+            enemies[i].target_x = player.x;
+            enemies[i].target_y = player.y;
+        }
+
+
         // draw enemies on the screen
         draw_enemies();
         
