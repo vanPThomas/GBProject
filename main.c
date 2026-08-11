@@ -52,7 +52,8 @@ void main (void)
             enemies[i].target_x = player.x;
             enemies[i].target_y = player.y;
         }
-
+        
+        move_enemies();
 
         // draw enemies on the screen
         draw_enemies();

@@ -58,3 +58,25 @@ void reset_enemy(uint8_t i)
     enemies[i].y = 0;
     enemies[i].active = 0;
 }
+
+void move_enemies(void)
+{
+    for (uint8_t i = 0; i < MAX_ENEMIES; i++)
+    {
+        if(enemies[i].x < enemies[i].target_x)
+        {
+            enemies[i].x++;
+        }else
+        {
+            enemies[i].x--;
+        }
+        if(enemies[i].y < enemies[i].target_y)
+        {
+            enemies[i].y++;
+        }else
+        {
+            enemies[i].y--;
+        }
+        
+    }
+}

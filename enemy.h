@@ -21,5 +21,6 @@ void update_enemies(void);
 void activate_enemies(void);
 void draw_enemies(void);
 void reset_enemy(uint8_t i);
+void move_enemies(void);
 
 #endif
