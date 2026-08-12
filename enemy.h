@@ -10,6 +10,8 @@ typedef struct {
     uint8_t spriteIndex;               // e.g. 5,6,7 for enemy sprites
     uint8_t target_x;
     uint8_t target_y;
+    uint8_t running_speed;            // How many frames before enemy moves
+    uint8_t running_frame_counter;    // Frame counter for running
 } Enemy;
 
 #define MAX_ENEMIES 5
