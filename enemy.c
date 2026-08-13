@@ -17,8 +17,8 @@ void init_enemies(void)
         enemies[i].spriteIndex = 5 + i;  // use sprite slots 5,6,7,...
         enemies[i].target_x = 0;
         enemies[i].target_y = 0;
-        enemies[i].running_speed;
-        enemies[i].running_frame_counter;
+        enemies[i].running_speed = 3;
+        enemies[i].running_frame_counter = 0;
     }
 }
 
@@ -61,24 +61,23 @@ void reset_enemy(uint8_t i)
     enemies[i].active = 0;
 }
 
-void move_enemies(void)
+void move_enemy(uint8_t j)
 {
-    for (uint8_t i = 0; i < MAX_ENEMIES; i++)
+
+    if(enemies[j].x < enemies[j].target_x)
     {
-        if(enemies[i].x < enemies[i].target_x)
-        {
-            enemies[i].x++;
-        }else
-        {
-            enemies[i].x--;
-        }
-        if(enemies[i].y < enemies[i].target_y)
-        {
-            enemies[i].y++;
-        }else
-        {
-            enemies[i].y--;
-        }
-        
+        enemies[j].x++;
+    }
+    else
+    {
+        enemies[j].x--;
+    }
+    if (enemies[j].y < enemies[j].target_y)
+    {
+        enemies[j].y++;
+    }
+    else
+    {
+        enemies[j].y--;
     }
 }

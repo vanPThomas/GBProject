@@ -46,14 +46,23 @@ void main (void)
     // Main Loop
     while (1)
     {
-        // Player is Enemies target
+        
         for (uint8_t i = 0; i < MAX_ENEMIES; i++)
         {
             enemies[i].target_x = player.x;
             enemies[i].target_y = player.y;
+            enemies[i].running_frame_counter++;
         }
-        
-        move_enemies();
+
+        // Player is Enemies target
+        for (uint8_t i = 0; i < MAX_ENEMIES; i++)
+        {
+            if(enemies[i].running_frame_counter >= enemies[i].running_speed)
+            {
+                enemies[i].running_frame_counter = 0;
+                move_enemy(i);
+            }
+        }        
 
         // draw enemies on the screen
         draw_enemies();
