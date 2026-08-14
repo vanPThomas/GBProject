@@ -47,14 +47,9 @@ void main (void)
     while (1)
     {
         
-        for (uint8_t i = 0; i < MAX_ENEMIES; i++)
-        {
-            enemies[i].target_x = player.x;
-            enemies[i].target_y = player.y;
-            enemies[i].running_frame_counter++;
-        }
+        // Player is Enemy's target
+        set_enemy_target_player();
 
-        // Player is Enemies target
         for (uint8_t i = 0; i < MAX_ENEMIES; i++)
         {
             if(enemies[i].running_frame_counter >= enemies[i].running_speed)

@@ -1,6 +1,7 @@
 #include <gb/gb.h>
 #include "enemy.h"
 #include "utils.h"
+#include "player.h"
 
 
 Enemy enemies[MAX_ENEMIES];
@@ -79,5 +80,15 @@ void move_enemy(uint8_t j)
     else
     {
         enemies[j].y--;
+    }
+}
+
+void set_enemy_target_player(void)
+{
+    for (uint8_t i = 0; i < MAX_ENEMIES; i++)
+    {
+        enemies[i].target_x = player.x;
+        enemies[i].target_y = player.y;
+        enemies[i].running_frame_counter++;
     }
 }
