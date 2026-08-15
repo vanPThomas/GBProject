@@ -25,5 +25,6 @@ void draw_enemies(void);
 void reset_enemy(uint8_t i);
 void move_enemy(uint8_t j);
 void set_enemy_target_player(void);
+void check_if_enemy_should_move_and_move_it(void);
 
 #endif

@@ -49,15 +49,8 @@ void main (void)
         
         // Player is Enemy's target
         set_enemy_target_player();
-
-        for (uint8_t i = 0; i < MAX_ENEMIES; i++)
-        {
-            if(enemies[i].running_frame_counter >= enemies[i].running_speed)
-            {
-                enemies[i].running_frame_counter = 0;
-                move_enemy(i);
-            }
-        }        
+        check_if_enemy_should_move_and_move_it();
+      
 
         // draw enemies on the screen
         draw_enemies();
