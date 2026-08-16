@@ -6,6 +6,7 @@
 
 Enemy enemies[MAX_ENEMIES];
 
+// Initialize the list of enemies
 void init_enemies(void)
 {
     for (uint8_t i = 0; i < MAX_ENEMIES; i++)
@@ -23,6 +24,7 @@ void init_enemies(void)
     }
 }
 
+// Udate each enemy
 void update_enemies(void)
 {
     for (uint8_t i = 0; i < MAX_ENEMIES; i++)
@@ -35,6 +37,7 @@ void update_enemies(void)
     }
 }
 
+// Spawn all enemies at random locations
 void activate_enemies(void)
 {
     enemies[0].x = generate_random_number_between(20, 140);
@@ -48,6 +51,7 @@ void activate_enemies(void)
     enemies[2].active = 1;
 }
 
+// Draw enemy
 void draw_enemies(void)
 {
     move_sprite(5, enemies[0].x, enemies[0].y);
@@ -55,6 +59,7 @@ void draw_enemies(void)
     move_sprite(7, enemies[2].x, enemies[2].y);
 }
 
+// Reset enemy location to off screen and put it on non active
 void reset_enemy(uint8_t i)
 {
     enemies[i].x = 0;
@@ -62,6 +67,7 @@ void reset_enemy(uint8_t i)
     enemies[i].active = 0;
 }
 
+// Increment enemy x and y location
 void move_enemy(uint8_t j)
 {
 
@@ -83,6 +89,7 @@ void move_enemy(uint8_t j)
     }
 }
 
+// Set Enemy target as player and increment Running counter
 void set_enemy_target_player(void)
 {
     for (uint8_t i = 0; i < MAX_ENEMIES; i++)
@@ -92,6 +99,8 @@ void set_enemy_target_player(void)
         enemies[i].running_frame_counter++;
     }
 }
+
+// For each enemy, check if the running counter is triggered, if yes, move the enemy location
 void check_if_enemy_should_move_and_move_it(void)
 {
     for (uint8_t i = 0; i < MAX_ENEMIES; i++)

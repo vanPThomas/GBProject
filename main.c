@@ -11,7 +11,7 @@
 
 void main (void)
 {
-    
+    // Set up random number generator seed
     generate_randseed();
 
     // set up graphics
@@ -46,12 +46,10 @@ void main (void)
     // Main Loop
     while (1)
     {
-        
-        // Player is Enemy's target
+        // Player is Enemy's target and moves towards it
         set_enemy_target_player();
         check_if_enemy_should_move_and_move_it();
-      
-
+    
         // draw enemies on the screen
         draw_enemies();
         
@@ -66,7 +64,7 @@ void main (void)
         draw_number(7, 0, player.score);
         draw_number(17, 0, player.lives);
 
-        
+        // Control firing rate of gun
         if (bulletFrameCounter > 0) bulletFrameCounter++;
         if (bulletFrameCounter >= firingRateFrames) bulletFrameCounter = 0;
 
@@ -86,7 +84,7 @@ void main (void)
             find_first_inactive_bullet(player);
         }
 
-        
+        // Loop through all enemies and bullets checking for a hit
         for (uint8_t j = 0; j < 3; j++)
         {
             for (uint8_t i = 0; i < 3; i++)
@@ -104,8 +102,8 @@ void main (void)
                 }
             }
         }
+        // Update bullet and player locations
         update_and_print_bullet_location();
-
         update_player_location();
         
         wait_vbl_done(); // Wait for next frame
