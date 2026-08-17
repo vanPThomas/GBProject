@@ -94,6 +94,7 @@ void find_first_inactive_bullet(Player player)
     }
 }
 
+// Initialize the bullet list
 void init_bullets(void)
 {
     for (uint8_t i = 0; i < MAX_BULLETS; i++)
@@ -107,6 +108,7 @@ void init_bullets(void)
     }
 }
 
+// Reset buillet off screen as non-fired
 void reset_bullet(uint8_t j)
 {
     bullets[j].x = 0;

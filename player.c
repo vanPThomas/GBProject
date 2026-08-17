@@ -46,9 +46,9 @@ void clamp_player_location(void)
     if (player.y > 144) player.y = 144;
 }
 
+// update player sprite position
 void update_player_location(void)
 {
-    // update player sprite position
     if(player.facingLeft == 1)
     {
         move_sprite (0, player.x, player.y);
@@ -61,6 +61,7 @@ void update_player_location(void)
     }
 }
 
+// Initialize player
 void init_player(void)
 {
     player.x = 84;

@@ -1,5 +1,6 @@
 #include "background.h"
 
+// Set background and lettering data
 void set_background_data(void)
 {
     // Set up background data
@@ -37,6 +38,7 @@ void set_background_data(void)
     set_bkg_data (29, 1, char9);
 }
 
+// Set Background tiles
 void fill_background(void)
 {
     // Fill Screen with floor tiles
@@ -68,6 +70,7 @@ void fill_background(void)
     set_bkg_tile_xy(16, 0, 7); // :
 }
 
+// Draw numbers on screen
 void draw_number(uint8_t x, uint8_t y, uint16_t number)
 {
     set_bkg_tile_xy(x+2, y, 20 + (number % 10));        // units
@@ -77,6 +80,7 @@ void draw_number(uint8_t x, uint8_t y, uint16_t number)
     set_bkg_tile_xy(x,   y, 20 + (number % 10));        // hundreds
 }
 
+// Prepare sprite data
 void set_and_index_spriteData(void)
 {
     set_sprite_data(0,1,PlayerSpriteLeftFacing);  // index 0, load sprite into vram, same parameter concept as in the set_bkg_data
