@@ -25,4 +25,4 @@ This project is my playground for understanding how classic games (like the orig
 2. Add GBDK's `bin` folder to your PATH
 3. Run:
    ```bash
-   lcc -o game.gb main.c
+   lcc -o game.gb main.c sprites.c background.c player.c bullet.c enemy.c utils.c
